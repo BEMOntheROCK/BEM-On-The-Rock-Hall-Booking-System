@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hall Booking — BEM On The Rock</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span>Hall Booking</span>
+        </div>
+      </div>
+      <ul class="navbar__links">
+        <li><a href="index.html" class="active">Halls</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow">BEM On The Rock — Cyberjaya</p>
+      <h1 class="hero__title">Book a Space for Your <em>Special Occasion</em></h1>
+      <p class="hero__subtitle">From intimate gatherings to grand celebrations — our halls are available for the community to use.</p>
+      <a href="#halls" class="btn btn--primary btn--lg">View Available Halls</a>
+    </div>
+  </section>
+
+  <!-- Info Strip -->
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-strip__grid">
+        <div class="info-strip__item">
+          <div class="info-strip__icon">📋</div>
+          <div class="info-strip__label">How to Book</div>
+          <div class="info-strip__value">Submit a request — we'll contact you to confirm</div>
+        </div>
+        <div class="info-strip__item">
+          <div class="info-strip__icon">💳</div>
+          <div class="info-strip__label">Payment</div>
+          <div class="info-strip__value">Cash at church office or bank transfer (Public Bank)</div>
+        </div>
+        <div class="info-strip__item">
+          <div class="info-strip__icon">📅</div>
+          <div class="info-strip__label">Deposit Deadline</div>
+          <div class="info-strip__value">Deposit must be paid 3 weeks before the event date</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Halls Section -->
+  <section class="section" id="halls">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-header__eyebrow">Our Spaces</p>
+        <h2 class="section-header__title">Choose Your Hall</h2>
+        <p class="section-header__subtitle">Select a hall below to begin your booking request.</p>
+      </div>
+
+      <!-- Carousel -->
+      <div class="carousel" id="hallCarousel">
+        <div class="carousel__track-wrapper">
+          <div class="carousel__track" id="carouselTrack">
+
+            <!-- Hall 1: Awan Hall -->
+            <div class="carousel__slide">
+              <div class="hall-card">
+                <div class="hall-card__accent" style="background: var(--hall-awan);"></div>
+                <div class="hall-card__body">
+                  <span class="hall-card__tag" style="background: var(--hall-awan);">Main Hall</span>
+                  <div class="hall-card__name">Awan Hall</div>
+                  <div class="hall-card__capacity">Capacity: <strong>up to 500 pax</strong></div>
+                  <ul class="hall-card__facilities" style="--check-color: var(--hall-awan);">
+                    <li>3 LED Screens</li>
+                    <li>Moving & LED Colourful Lighting</li>
+                    <li>Full PA System (max 4 wireless mics)</li>
+                    <li>Musical Instruments</li>
+                    <li>Rostrum / Podium</li>
+                    <li>Kids Room</li>
+                    <li>Crew: PA, Media, Live Streaming, Lights &amp; Stage, Security</li>
+                  </ul>
+                  <div class="hall-card__footer">
+                    <div class="hall-card__price">RM 200 <span>/ hour</span></div>
+                    <button class="btn btn--primary btn--sm" onclick="selectHall('awan')">Select Hall</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hall 2: Adiwira Hall -->
+            <div class="carousel__slide">
+              <div class="hall-card">
+                <div class="hall-card__accent" style="background: var(--hall-adiwira);"></div>
+                <div class="hall-card__body">
+                  <span class="hall-card__tag" style="background: var(--hall-adiwira);">Medium Hall</span>
+                  <div class="hall-card__name">Adiwira Hall</div>
+                  <div class="hall-card__capacity">Capacity: <strong>up to 150 pax</strong></div>
+                  <ul class="hall-card__facilities">
+                    <li>Full PA System (max 3 wireless mics)</li>
+                    <li>LCD Projector &amp; Screen</li>
+                    <li>Musical Instruments</li>
+                    <li>Rostrum / Podium</li>
+                    <li>Crew: PA, Media, Security</li>
+                  </ul>
+                  <div class="hall-card__footer">
+                    <div class="hall-card__price">RM 100 <span>/ hour</span></div>
+                    <button class="btn btn--primary btn--sm" onclick="selectHall('adiwira')">Select Hall</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hall 3: Rock Essence -->
+            <div class="carousel__slide">
+              <div class="hall-card">
+                <div class="hall-card__accent" style="background: var(--hall-rock);"></div>
+                <div class="hall-card__body">
+                  <span class="hall-card__tag" style="background: var(--hall-rock);">Dining Hall</span>
+                  <div class="hall-card__name">Rock Essence</div>
+                  <div class="hall-card__capacity">Capacity: <strong>up to 80 pax</strong></div>
+                  <ul class="hall-card__facilities">
+                    <li>Chairs &amp; Dining Tables</li>
+                    <li>PA System (max 2 mics)</li>
+                    <li>Crew: Sound, Multimedia, Security</li>
+                  </ul>
+                  <div class="hall-card__footer">
+                    <div class="hall-card__price">RM 100 <span>/ hour</span></div>
+                    <button class="btn btn--primary btn--sm" onclick="selectHall('rock')">Select Hall</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hall 4: Office Meeting Room -->
+            <div class="carousel__slide">
+              <div class="hall-card">
+                <div class="hall-card__accent" style="background: var(--hall-office);"></div>
+                <div class="hall-card__body">
+                  <span class="hall-card__tag" style="background: var(--hall-office);">Meeting Room</span>
+                  <div class="hall-card__name">Office Meeting Room</div>
+                  <div class="hall-card__capacity">Capacity: <strong>up to 20 pax</strong></div>
+                  <ul class="hall-card__facilities">
+                    <li>Chairs &amp; Tables</li>
+                    <li>LCD Projector</li>
+                    <li>Available time slots: 8:30am–12:30pm, 1:00pm–5:00pm, 6:00pm–10:00pm</li>
+                    <li>Crew: Security (night only)</li>
+                  </ul>
+                  <div class="hall-card__footer">
+                    <div class="hall-card__price">RM 50 <span>/ hour</span></div>
+                    <button class="btn btn--primary btn--sm" onclick="selectHall('office')">Select Hall</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hall 5: VIP Lounge -->
+            <div class="carousel__slide">
+              <div class="hall-card">
+                <div class="hall-card__accent" style="background: var(--hall-vip);"></div>
+                <div class="hall-card__body">
+                  <span class="hall-card__tag" style="background: var(--hall-vip);">Lounge</span>
+                  <div class="hall-card__name">VIP Lounge</div>
+                  <div class="hall-card__capacity">Capacity: <strong>up to 12 pax</strong></div>
+                  <ul class="hall-card__facilities">
+                    <li>Sofa &amp; Chairs</li>
+                    <li>Microwave</li>
+                    <li>Food Serving Table</li>
+                    <li>Crew: Security (night only)</li>
+                  </ul>
+                  <div class="hall-card__footer">
+                    <div class="hall-card__price">RM 50 <span>/ hour</span></div>
+                    <button class="btn btn--primary btn--sm" onclick="selectHall('vip')">Select Hall</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- end track -->
+        </div><!-- end wrapper -->
+
+        <!-- Controls -->
+        <div class="carousel__controls">
+          <button class="carousel__btn" id="prevBtn" onclick="slideCarousel(-1)" disabled>&#8592;</button>
+          <div class="carousel__dots" id="carouselDots"></div>
+          <button class="carousel__btn" id="nextBtn" onclick="slideCarousel(1)">&#8594;</button>
+        </div>
+      </div><!-- end carousel -->
+
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section section--light" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-header__eyebrow">Process</p>
+        <h2 class="section-header__title">How It Works</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg);">
+
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:var(--space-sm);">🏛️</div>
+          <h4 style="margin-bottom:var(--space-xs);">1. Choose a Hall</h4>
+          <p style="font-size:0.85rem;">Browse our spaces and select the one that fits your event.</p>
+        </div>
+
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:var(--space-sm);">📝</div>
+          <h4 style="margin-bottom:var(--space-xs);">2. Submit a Request</h4>
+          <p style="font-size:0.85rem;">Fill in your event details and submit the booking request form.</p>
+        </div>
+
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:var(--space-sm);">📞</div>
+          <h4 style="margin-bottom:var(--space-xs);">3. We'll Contact You</h4>
+          <p style="font-size:0.85rem;">Our team will reach out to confirm availability and discuss details.</p>
+        </div>
+
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:var(--space-sm);">✅</div>
+          <h4 style="margin-bottom:var(--space-xs);">4. Pay &amp; Confirm</h4>
+          <p style="font-size:0.85rem;">Pay the deposit to secure your booking. Balance is due 3 weeks before your event.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Rules -->
+  <section class="section" id="contact">
+    <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: start;">
+
+      <div>
+        <p class="section-header__eyebrow" style="text-align:left; margin-bottom: var(--space-sm);">Rules &amp; Reminders</p>
+        <h2 style="margin-bottom: var(--space-lg);">Before You Book</h2>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:var(--space-md);">
+          <li style="display:flex; gap:var(--space-md); align-items:flex-start;">
+            <span style="color:var(--gold); font-weight:700; font-size:1.1rem; margin-top:1px;">①</span>
+            <p style="margin:0; font-size:0.9rem;"><strong style="color:var(--navy);">Confirmation &amp; Deposit</strong> must be completed 3 weeks before the event date.</p>
+          </li>
+          <li style="display:flex; gap:var(--space-md); align-items:flex-start;">
+            <span style="color:var(--gold); font-weight:700; font-size:1.1rem; margin-top:1px;">②</span>
+            <p style="margin:0; font-size:0.9rem;"><strong style="color:var(--navy);">Rehearsal &amp; Decoration</strong> time is provided the day before the event (5pm – 9pm).</p>
+          </li>
+          <li style="display:flex; gap:var(--space-md); align-items:flex-start;">
+            <span style="color:var(--gold); font-weight:700; font-size:1.1rem; margin-top:1px;">③</span>
+            <p style="margin:0; font-size:0.9rem;"><strong style="color:var(--navy);">Hospitality &amp; Catering</strong> is fully the responsibility of the renter.</p>
+          </li>
+          <li style="display:flex; gap:var(--space-md); align-items:flex-start;">
+            <span style="color:var(--gold); font-weight:700; font-size:1.1rem; margin-top:1px;">④</span>
+            <p style="margin:0; font-size:0.9rem;"><strong style="color:var(--navy);">Cleanliness</strong> is the responsibility of the renter after the event.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="section-header__eyebrow" style="text-align:left; margin-bottom: var(--space-sm);">Payment Details</p>
+        <h2 style="margin-bottom: var(--space-lg);">How to Pay</h2>
+        <div class="card" style="display:flex; flex-direction:column; gap:var(--space-md);">
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--slate); margin-bottom:var(--space-xs);">Option 1</div>
+            <p style="margin:0; font-size:0.9rem; color:var(--navy); font-weight:600;">Cash at Church Office</p>
+            <p style="margin:0; font-size:0.85rem;">Visit us during office hours to pay in person.</p>
+          </div>
+          <hr style="border:none; border-top:1px solid var(--cream-dark);" />
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--slate); margin-bottom:var(--space-xs);">Option 2</div>
+            <p style="margin:0; font-size:0.9rem; color:var(--navy); font-weight:600;">Bank Transfer — Public Bank</p>
+            <p style="margin:0; font-size:0.85rem;">Account No: <strong style="color:var(--navy); font-family: monospace;">3187701204</strong></p>
+            <p style="margin:0; font-size:0.82rem; color:var(--slate); margin-top:4px;">Remark: <em>SEWA HALL &amp; YOUR NAME</em></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> <strong>BEM On The Rock</strong>. Hall Booking System.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <script src="index.js"></script>
+</body>
+</html>
