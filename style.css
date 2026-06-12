@@ -1193,6 +1193,204 @@ tbody tr:hover {
   font-size: 0.88rem;
 }
 
+/* --- Back Link --- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--silver);
+  margin-bottom: var(--space-lg);
+  transition: color var(--transition);
+}
+
+.back-link:hover { color: var(--marigold); }
+
+/* --- Hall Banner (booking page) --- */
+.hall-banner {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--black-soft);
+}
+
+.hall-banner__accent {
+  height: 4px;
+  width: 100%;
+}
+
+.hall-banner__body {
+  padding: var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.hall-banner__left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.hall-banner__tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  color: var(--black);
+  width: fit-content;
+}
+
+.hall-banner__name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.hall-banner__meta {
+  font-size: 0.82rem;
+  color: var(--silver-dark);
+}
+
+.hall-banner__price {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--marigold);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.hall-banner__price span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--silver-dark);
+  text-align: right;
+}
+
+/* --- Form Section Label --- */
+.form-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--marigold);
+  margin-bottom: var(--space-md);
+}
+
+/* --- Form Divider --- */
+.form-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--space-lg) 0;
+}
+
+/* --- Radio Group --- */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--silver-light);
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.radio-label:hover {
+  border-color: var(--marigold);
+  background: var(--marigold-glow);
+}
+
+.radio-label input[type="radio"] {
+  display: none;
+}
+
+.radio-custom {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color var(--transition);
+}
+
+.radio-label input[type="radio"]:checked ~ .radio-custom {
+  border-color: var(--marigold);
+}
+
+.radio-label input[type="radio"]:checked ~ .radio-custom::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 7px;
+  background: var(--marigold);
+  border-radius: 50%;
+}
+
+.radio-label:has(input[type="radio"]:checked) {
+  border-color: var(--marigold);
+  background: var(--marigold-glow);
+  color: var(--white);
+}
+
+/* --- Cost Preview --- */
+.cost-preview {
+  background: var(--black-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.cost-preview__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.86rem;
+  color: var(--silver);
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cost-preview__row:last-of-type {
+  border-bottom: none;
+}
+
+.cost-preview__row--total {
+  font-weight: 700;
+  color: var(--marigold);
+  font-size: 0.95rem;
+  padding-top: var(--space-sm);
+}
+
+.cost-preview__note {
+  font-size: 0.74rem;
+  color: var(--silver-dark);
+  margin-top: var(--space-sm);
+  font-style: italic;
+}
+
 /* --- Responsive --- */
 @media (max-width: 1024px) {
   .carousel__slide {

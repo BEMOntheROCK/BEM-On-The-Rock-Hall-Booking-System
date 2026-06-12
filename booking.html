@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Request — BEM On The Rock</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span>Hall Booking</span>
+        </div>
+      </div>
+      <ul class="navbar__links">
+        <li><a href="index.html">Halls</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page -->
+  <section class="section">
+    <div class="container" style="max-width: 720px;">
+
+      <!-- Back link -->
+      <a href="index.html" class="back-link">&#8592; Back to hall selection</a>
+
+      <!-- Hall Summary Banner -->
+      <div class="hall-banner" id="hallBanner">
+        <div class="hall-banner__accent" id="hallBannerAccent"></div>
+        <div class="hall-banner__body">
+          <div class="hall-banner__left">
+            <span class="hall-banner__tag" id="hallBannerTag"></span>
+            <div class="hall-banner__name" id="hallBannerName">Loading...</div>
+            <div class="hall-banner__meta" id="hallBannerMeta"></div>
+          </div>
+          <div class="hall-banner__price" id="hallBannerPrice"></div>
+        </div>
+      </div>
+
+      <!-- Form Card -->
+      <div class="card" style="margin-top: var(--space-lg);">
+        <div style="margin-bottom: var(--space-xl);">
+          <p class="section-header__eyebrow">Booking Request</p>
+          <h2 style="font-size: 1.5rem;">Fill in Your Details</h2>
+          <p style="font-size:0.88rem; margin-top: var(--space-xs);">All fields marked <span style="color:var(--danger);">*</span> are required. We'll contact you once your request is received.</p>
+        </div>
+
+        <form id="bookingForm" novalidate>
+
+          <!-- Event Purpose -->
+          <div class="form-group">
+            <label class="form-label" for="eventPurpose">Event Purpose <span class="required">*</span></label>
+            <select class="form-select" id="eventPurpose" required>
+              <option value="" disabled selected>Select event type</option>
+              <option value="engagement">Engagement Ceremony</option>
+              <option value="wedding">Wedding</option>
+              <option value="other">Other (Gathering, Dinner, Activity, etc.)</option>
+            </select>
+          </div>
+
+          <!-- Other Purpose Text (conditional) -->
+          <div class="form-group" id="otherPurposeGroup" style="display:none;">
+            <label class="form-label" for="otherPurpose">Please describe your event <span class="required">*</span></label>
+            <input class="form-input" type="text" id="otherPurpose" placeholder="e.g. Annual church dinner, Birthday celebration..." />
+          </div>
+
+          <!-- Member Status -->
+          <div class="form-group">
+            <label class="form-label">Are you a BEM On The Rock member? <span class="required">*</span></label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="memberStatus" value="member" required />
+                <span class="radio-custom"></span>
+                Yes, I am a registered member
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="memberStatus" value="outsider" />
+                <span class="radio-custom"></span>
+                No, I am not a registered member
+              </label>
+            </div>
+            <p class="form-hint">Member pricing applies to those registered in our church membership system. Admin will verify your status.</p>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Primary Contact — always shown -->
+          <div id="primarySection">
+            <p class="form-section-label" id="primaryLabel">Your Details</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="name1">Full Name <span class="required">*</span></label>
+                <input class="form-input" type="text" id="name1" placeholder="As per IC" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="phone1">Phone Number <span class="required">*</span></label>
+                <input class="form-input" type="tel" id="phone1" placeholder="e.g. 012-3456789" required />
+              </div>
+            </div>
+          </div>
+
+          <!-- Secondary Contact — shown for engagement/wedding -->
+          <div id="secondarySection" style="display:none;">
+            <hr class="form-divider" />
+            <p class="form-section-label" id="secondaryLabel">Partner's Details</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="name2">Full Name <span class="required">*</span></label>
+                <input class="form-input" type="text" id="name2" placeholder="As per IC" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="phone2">Phone Number <span class="required">*</span></label>
+                <input class="form-input" type="tel" id="phone2" placeholder="e.g. 012-3456789" />
+              </div>
+            </div>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Church / Organisation -->
+          <div class="form-group">
+            <label class="form-label" for="church">Church / Organisation Name <span class="required">*</span></label>
+            <input class="form-input" type="text" id="church" placeholder="e.g. BEM On The Rock" required />
+            <p class="form-hint">Enter your church or organisation name. If none, enter your full name.</p>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Date & Time -->
+          <p class="form-section-label">Event Schedule</p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="eventDate">Date of Use <span class="required">*</span></label>
+              <input class="form-input" type="date" id="eventDate" required />
+            </div>
+            <div class="form-group" id="slotGroup" style="display:none;">
+              <label class="form-label" for="timeSlot">Time Slot <span class="required">*</span></label>
+              <select class="form-select" id="timeSlot">
+                <option value="" disabled selected>Select a slot</option>
+                <option value="08:30-12:30">8:30am – 12:30pm</option>
+                <option value="13:00-17:00">1:00pm – 5:00pm</option>
+                <option value="18:00-22:00">6:00pm – 10:00pm</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Start & End time (for non-office halls) -->
+          <div class="form-row" id="timeRangeGroup">
+            <div class="form-group">
+              <label class="form-label" for="startTime">Start Time <span class="required">*</span></label>
+              <input class="form-input" type="time" id="startTime" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="endTime">End Time <span class="required">*</span></label>
+              <input class="form-input" type="time" id="endTime" required />
+            </div>
+          </div>
+
+          <!-- Duration & Estimated Cost -->
+          <div class="cost-preview" id="costPreview" style="display:none;">
+            <div class="cost-preview__row">
+              <span>Duration</span>
+              <span id="previewDuration">—</span>
+            </div>
+            <div class="cost-preview__row">
+              <span>Rate</span>
+              <span id="previewRate">—</span>
+            </div>
+            <div class="cost-preview__row cost-preview__row--total">
+              <span>Estimated Total</span>
+              <span id="previewTotal">—</span>
+            </div>
+            <p class="cost-preview__note">Final pricing is subject to admin confirmation and member/outsider verification.</p>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Notes -->
+          <div class="form-group">
+            <label class="form-label" for="notes">Additional Notes <span style="color:var(--silver-dark); font-weight:400;">(optional)</span></label>
+            <textarea class="form-textarea" id="notes" placeholder="Any special requirements, setup requests, or other information for the church office..."></textarea>
+          </div>
+
+          <!-- Submit -->
+          <div style="display:flex; gap: var(--space-md); align-items:center; margin-top: var(--space-md);">
+            <button type="submit" class="btn btn--primary btn--lg" id="submitBtn">
+              Submit Booking Request
+            </button>
+            <a href="index.html" class="btn btn--ghost">Cancel</a>
+          </div>
+
+        </form>
+      </div><!-- /card -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> <strong>BEM On The Rock</strong>. Hall Booking System.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+  <script type="module" src="booking.js"></script>
+</body>
+</html>
