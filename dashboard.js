@@ -256,6 +256,7 @@ function renderPanel(b) {
     <!-- Booking Details -->
     <div class="detail-section">
       <div class="detail-section__title">Event Details</div>
+      <div class="detail-row"><span class="detail-row__label">Reference No.</span><span class="detail-row__value" style="font-family:monospace; color:var(--marigold);">${b.referenceNumber || '—'}</span></div>
       <div class="detail-row"><span class="detail-row__label">Hall</span><span class="detail-row__value">${b.hallName}</span></div>
       <div class="detail-row"><span class="detail-row__label">Event Type</span><span class="detail-row__value">${b.purposeLabel}${b.otherPurpose ? ` — ${b.otherPurpose}` : ''}</span></div>
       <div class="detail-row"><span class="detail-row__label">Date</span><span class="detail-row__value">${formatDate(b.eventDate)}</span></div>
@@ -485,23 +486,23 @@ window.generateInvoice = function(id) {
   <meta charset="UTF-8" />
   <title>Invoice — ${b.name1}</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; padding: 48px; max-width: 720px; margin: 0 auto; }
-    .inv-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; border-bottom: 2px solid #ECA820; padding-bottom: 24px; }
-    .inv-header h1 { font-family: 'Playfair Display', serif; font-size: 28px; color: #111; }
-    .inv-header p  { font-size: 12px; color: #666; margin-top: 4px; }
-    .inv-badge { background: #ECA820; color: #111; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
-    .inv-section { margin-bottom: 28px; }
-    .inv-section h3 { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #ECA820; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
-    .inv-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; }
-    .inv-row span:first-child { color: #555; }
-    .inv-row span:last-child  { font-weight: 600; }
-    .inv-total { background: #fafafa; border-radius: 8px; padding: 16px; margin-top: 8px; display: flex; justify-content: space-between; }
-    .inv-total span:first-child { font-size: 13px; color: #555; }
-    .inv-total span:last-child  { font-size: 20px; font-family: 'Playfair Display', serif; font-weight: 700; color: #ECA820; }
-    .inv-footer { margin-top: 40px; font-size: 11px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 16px; }
-    @media print { body { padding: 24px; } }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter',sans-serif;background:#fff;color:#111;padding:48px;max-width:720px;margin:0 auto;}
+    .inv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px;border-bottom:2px solid #ECA820;padding-bottom:24px;}
+    .inv-header h1{font-family:'Playfair Display',serif;font-size:28px;color:#111;}
+    .inv-header p{font-size:12px;color:#444;margin-top:4px;}
+    .inv-badge{background:#ECA820;color:#111;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
+    .inv-ref{font-size:11px;color:#555;margin-top:6px;font-family:'Courier New',monospace;letter-spacing:0.05em;}
+    .inv-section{margin-bottom:28px;}
+    .inv-section h3{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#B8860B;margin-bottom:12px;border-bottom:1px solid #ddd;padding-bottom:6px;}
+    .inv-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px;}
+    .inv-row span:first-child{color:#444;}
+    .inv-row span:last-child{font-weight:600;color:#111;}
+    .inv-total{background:#f9f7f2;border:1px solid #e8e0cc;border-radius:8px;padding:16px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;}
+    .inv-total span:first-child{font-size:13px;color:#444;}
+    .inv-total span:last-child{font-size:22px;font-family:'Playfair Display',serif;font-weight:700;color:#B8860B;}
+    .inv-footer{margin-top:40px;font-size:11px;color:#666;text-align:center;border-top:1px solid #ddd;padding-top:16px;}
+    @media print{body{padding:24px;}}
   </style>
 </head>
 <body>

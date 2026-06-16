@@ -176,6 +176,15 @@ function validateForm() {
   return true;
 }
 
+// ── Reference Number Generator ────────────────────────────
+function generateRefNumber() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const year  = new Date().getFullYear();
+  let suffix  = '';
+  for (let i = 0; i < 6; i++) suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+  return `BK-${year}-${suffix}`;
+}
+
 // ── Build Payload ─────────────────────────────────────────
 function buildPayload() {
   const hall    = HALL_DATA[selectedHall.key];
@@ -207,6 +216,7 @@ function buildPayload() {
     startTime, endTime, durationHours,
     estimatedTotal: durationHours * hall.rate,
     notes: document.getElementById('notes').value.trim(),
+    referenceNumber: generateRefNumber(),
     status: 'pending',
     submittedAt: new Date().toISOString(),
     depositAmount: null, depositMethod: null, depositReceipt: null, depositDate: null,
@@ -230,6 +240,7 @@ document.getElementById('bookingForm').addEventListener('submit', async (e) => {
     sessionStorage.setItem('bookingSubmission', JSON.stringify({
       hallName: payload.hallName, eventDate: payload.eventDate,
       name1: payload.name1, purpose: payload.purposeLabel,
+      referenceNumber: payload.referenceNumber,
     }));
     window.location.href = 'confirmation.html';
   } catch (err) {

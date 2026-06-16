@@ -13,7 +13,8 @@ if (stored) {
 
     document.getElementById('summaryHall').textContent    = data.hallName  || '—';
     document.getElementById('summaryPurpose').textContent = data.purpose   || '—';
-    document.getElementById('summaryName').textContent    = data.name1     || '—';
+    document.getElementById('summaryName').textContent    = data.name1            || '—';
+    document.getElementById('summaryRef').textContent     = data.referenceNumber || '—';
 
     if (data.eventDate) {
       const date = new Date(data.eventDate + 'T00:00:00');
