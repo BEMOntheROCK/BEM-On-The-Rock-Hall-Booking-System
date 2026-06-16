@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — BEM On The Rock Admin</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Admin Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span style="color: var(--marigold);">Admin Dashboard</span>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap: var(--space-lg);">
+        <a href="calendar.html" class="btn btn--ghost btn--sm">📅 Calendar</a>
+        <span style="font-size:0.82rem; color:var(--silver-dark);" id="adminEmail"></span>
+        <button class="btn btn--outline btn--sm" id="logoutBtn">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Header -->
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom: var(--space-xl); flex-wrap:wrap; gap: var(--space-md);">
+        <div>
+          <p class="section-header__eyebrow">Admin</p>
+          <h2 style="margin:0;">Booking Requests</h2>
+        </div>
+        <div style="display:flex; gap:var(--space-sm); align-items:center;">
+          <input class="form-input" type="text" id="searchInput" placeholder="Search name, hall, event..." style="width:240px;" />
+        </div>
+      </div>
+
+      <!-- Stats Strip -->
+      <div class="stats-strip" id="statsStrip">
+        <div class="stat-card">
+          <div class="stat-card__value" id="statPending">—</div>
+          <div class="stat-card__label">Pending</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statApproved">—</div>
+          <div class="stat-card__label">Approved</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statRejected">—</div>
+          <div class="stat-card__label">Archived</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statFullyPaid">—</div>
+          <div class="stat-card__label">Fully Paid</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="pending"  onclick="switchTab('pending')">Pending</button>
+        <button class="tab-btn"        data-tab="approved" onclick="switchTab('approved')">Approved</button>
+        <button class="tab-btn"        data-tab="archived" onclick="switchTab('archived')">Archived</button>
+      </div>
+
+      <!-- Pending Tab -->
+      <div id="tab-pending">
+        <div class="table-wrapper">
+          <table id="pendingTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Hall</th>
+                <th>Event Date</th>
+                <th>Event Type</th>
+                <th>Member</th>
+                <th>Submitted</th>
+                <th>Payment</th>
+              </tr>
+            </thead>
+            <tbody id="pendingBody">
+              <tr><td colspan="7"><div class="empty-state"><div class="empty-state__icon">📭</div><div class="empty-state__title">Loading...</div></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Approved Tab -->
+      <div id="tab-approved" style="display:none;">
+        <div class="table-wrapper">
+          <table id="approvedTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Hall</th>
+                <th>Event Date</th>
+                <th>Event Type</th>
+                <th>Member</th>
+                <th>Submitted</th>
+                <th>Payment</th>
+              </tr>
+            </thead>
+            <tbody id="approvedBody">
+              <tr><td colspan="7"><div class="empty-state"><div class="empty-state__icon">📭</div><div class="empty-state__title">Loading...</div></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Archived Tab -->
+      <div id="tab-archived" style="display:none;">
+        <p style="font-size:0.8rem; color:var(--silver-dark); margin-bottom:var(--space-md);">
+          ⚠ Archived bookings are automatically deleted 90 days after being archived.
+        </p>
+        <div class="table-wrapper">
+          <table id="archivedTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Hall</th>
+                <th>Event Date</th>
+                <th>Event Type</th>
+                <th>Member</th>
+                <th>Archived On</th>
+                <th>Deletes On</th>
+              </tr>
+            </thead>
+            <tbody id="archivedBody">
+              <tr><td colspan="7"><div class="empty-state"><div class="empty-state__icon">📭</div><div class="empty-state__title">Loading...</div></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== SIDE PANEL ===================== -->
+  <div class="side-panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+
+  <div class="side-panel" id="sidePanel">
+
+    <div class="side-panel__header">
+      <h3 class="modal__title" id="panelTitle">Booking Details</h3>
+      <button class="modal__close" onclick="closePanel()">✕</button>
+    </div>
+
+    <div class="side-panel__body" id="panelBody">
+      <!-- Dynamically populated -->
+    </div>
+
+    <div class="side-panel__footer" id="panelFooter">
+      <!-- Dynamically populated -->
+    </div>
+
+  </div>
+
+  <!-- ===================== CONFIRM MODAL ===================== -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal">
+      <div class="modal__header">
+        <span class="modal__title" id="confirmTitle">Confirm Action</span>
+        <button class="modal__close" onclick="closeConfirmModal()">✕</button>
+      </div>
+      <div class="modal__body">
+        <p id="confirmMessage" style="color:var(--silver);"></p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost btn--sm" onclick="closeConfirmModal()">Cancel</button>
+        <button class="btn btn--sm" id="confirmActionBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
