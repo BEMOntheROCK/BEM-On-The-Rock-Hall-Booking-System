@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request Submitted — BEM On The Rock</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span>Hall Booking</span>
+        </div>
+      </div>
+      <ul class="navbar__links">
+        <li><a href="index.html">Halls</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Confirmation -->
+  <section class="section">
+    <div class="container" style="max-width: 600px; text-align: center;">
+
+      <!-- Icon -->
+      <div class="confirm-icon">
+        <div class="confirm-icon__ring"></div>
+        <span class="confirm-icon__check">✓</span>
+      </div>
+
+      <!-- Heading -->
+      <h1 style="margin-bottom: var(--space-sm);">Request Submitted!</h1>
+      <p style="font-size: 1rem; max-width: 440px; margin: 0 auto var(--space-2xl);">
+        Thank you for your booking request. Our team will review it and contact you shortly to confirm availability.
+      </p>
+
+      <!-- Summary Card -->
+      <div class="card confirm-summary" id="confirmSummary" style="text-align: left; margin-bottom: var(--space-xl);">
+        <p class="form-section-label" style="margin-bottom: var(--space-md);">Booking Summary</p>
+
+        <div class="detail-row">
+          <span class="detail-row__label">Hall</span>
+          <span class="detail-row__value" id="summaryHall">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-row__label">Event</span>
+          <span class="detail-row__value" id="summaryPurpose">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-row__label">Date</span>
+          <span class="detail-row__value" id="summaryDate">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-row__label">Name</span>
+          <span class="detail-row__value" id="summaryName">—</span>
+        </div>
+      </div>
+
+      <!-- What happens next -->
+      <div class="card" style="text-align: left; margin-bottom: var(--space-xl);">
+        <p class="form-section-label" style="margin-bottom: var(--space-md);">What Happens Next</p>
+        <ul class="next-steps">
+          <li>
+            <span class="next-steps__num">1</span>
+            <div>
+              <strong>We'll review your request</strong>
+              <p>Our team will check availability for your selected hall and date.</p>
+            </div>
+          </li>
+          <li>
+            <span class="next-steps__num">2</span>
+            <div>
+              <strong>We'll contact you</strong>
+              <p>We'll reach out via phone to confirm or suggest an alternative date if needed.</p>
+            </div>
+          </li>
+          <li>
+            <span class="next-steps__num">3</span>
+            <div>
+              <strong>Pay your deposit</strong>
+              <p>Once confirmed, pay your deposit to secure the booking. Deposit must be paid at least 3 weeks before your event date.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Actions -->
+      <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+        <a href="index.html" class="btn btn--primary">Back to Hall Listing</a>
+        <a href="index.html#contact" class="btn btn--ghost">View Payment Details</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> <strong>BEM On The Rock</strong>. Hall Booking System.</p>
+    </div>
+  </footer>
+
+  <script src="confirmation.js"></script>
+</body>
+</html>
