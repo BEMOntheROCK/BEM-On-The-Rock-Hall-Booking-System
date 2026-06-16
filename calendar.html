@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar — BEM On The Rock Admin</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Admin Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span style="color: var(--marigold);">Admin Dashboard</span>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap: var(--space-lg);">
+        <a href="dashboard.html" class="btn btn--ghost btn--sm">📋 Requests</a>
+        <span style="font-size:0.82rem; color:var(--silver-dark);" id="adminEmail"></span>
+        <button class="btn btn--outline btn--sm" id="logoutBtn">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Header -->
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom: var(--space-xl); flex-wrap:wrap; gap: var(--space-md);">
+        <div>
+          <p class="section-header__eyebrow">Admin</p>
+          <h2 style="margin:0;">Bookings Calendar</h2>
+        </div>
+
+        <!-- Hall Filter -->
+        <div style="display:flex; gap:var(--space-sm); align-items:center; flex-wrap:wrap;">
+          <span style="font-size:0.8rem; color:var(--silver-dark); font-weight:600;">Filter:</span>
+          <button class="filter-btn active" data-hall="all"     onclick="setFilter('all')">All Halls</button>
+          <button class="filter-btn" data-hall="awan"    onclick="setFilter('awan')"    style="--hall-color: var(--hall-awan);">Awan</button>
+          <button class="filter-btn" data-hall="adiwira" onclick="setFilter('adiwira')" style="--hall-color: var(--hall-adiwira);">Adiwira</button>
+          <button class="filter-btn" data-hall="rock"    onclick="setFilter('rock')"    style="--hall-color: var(--hall-rock);">Rock Essence</button>
+          <button class="filter-btn" data-hall="office"  onclick="setFilter('office')"  style="--hall-color: var(--hall-office);">Meeting Room</button>
+          <button class="filter-btn" data-hall="vip"     onclick="setFilter('vip')"     style="--hall-color: var(--hall-vip);">VIP Lounge</button>
+        </div>
+      </div>
+
+      <!-- Calendar Nav -->
+      <div class="cal-nav">
+        <button class="carousel__btn" id="prevMonthBtn" onclick="changeMonth(-1)">&#8592;</button>
+        <h3 id="calMonthLabel" style="font-family: var(--font-display); font-size:1.4rem; color:var(--white); min-width: 220px; text-align:center;"></h3>
+        <button class="carousel__btn" id="nextMonthBtn" onclick="changeMonth(1)">&#8594;</button>
+        <button class="btn btn--ghost btn--sm" onclick="goToToday()">Today</button>
+      </div>
+
+      <!-- Legend -->
+      <div class="cal-legend">
+        <span class="cal-legend__item"><span class="cal-legend__dot" style="background:var(--hall-awan);"></span>Awan Hall</span>
+        <span class="cal-legend__item"><span class="cal-legend__dot" style="background:var(--hall-adiwira);"></span>Adiwira Hall</span>
+        <span class="cal-legend__item"><span class="cal-legend__dot" style="background:var(--hall-rock);"></span>Rock Essence</span>
+        <span class="cal-legend__item"><span class="cal-legend__dot" style="background:var(--hall-office);"></span>Meeting Room</span>
+        <span class="cal-legend__item"><span class="cal-legend__dot" style="background:var(--hall-vip);"></span>VIP Lounge</span>
+      </div>
+
+      <!-- Calendar Grid -->
+      <div class="calendar-grid" id="calendarGrid">
+        <!-- Day headers -->
+        <div class="calendar-day-header">Sun</div>
+        <div class="calendar-day-header">Mon</div>
+        <div class="calendar-day-header">Tue</div>
+        <div class="calendar-day-header">Wed</div>
+        <div class="calendar-day-header">Thu</div>
+        <div class="calendar-day-header">Fri</div>
+        <div class="calendar-day-header">Sat</div>
+        <!-- Days populated by JS -->
+      </div>
+
+      <!-- Empty state -->
+      <div id="calEmptyState" style="display:none;">
+        <div class="empty-state">
+          <div class="empty-state__icon">📅</div>
+          <div class="empty-state__title">No bookings this month</div>
+          <div class="empty-state__text">Approved bookings will appear on the calendar.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== SIDE PANEL ===================== -->
+  <div class="side-panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+
+  <div class="side-panel" id="sidePanel">
+    <div class="side-panel__header">
+      <h3 class="modal__title" id="panelTitle">Booking Details</h3>
+      <button class="modal__close" onclick="closePanel()">✕</button>
+    </div>
+    <div class="side-panel__body" id="panelBody"></div>
+    <div class="side-panel__footer" id="panelFooter"></div>
+  </div>
+
+  <!-- ===================== CONFIRM MODAL ===================== -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal">
+      <div class="modal__header">
+        <span class="modal__title" id="confirmTitle">Confirm Action</span>
+        <button class="modal__close" onclick="closeConfirmModal()">✕</button>
+      </div>
+      <div class="modal__body">
+        <p id="confirmMessage" style="color:var(--silver);"></p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost btn--sm" onclick="closeConfirmModal()">Cancel</button>
+        <button class="btn btn--sm" id="confirmActionBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="calendar.js"></script>
+</body>
+</html>
