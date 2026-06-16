@@ -10,12 +10,12 @@ import { getFirestore }      from "https://www.gstatic.com/firebasejs/10.12.0/fi
 // TODO: Replace with your actual Firebase project credentials
 // Found in: Firebase Console → Project Settings → General → Your apps → SDK setup
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_AUTH_DOMAIN",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId:             "YOUR_APP_ID",
+  apiKey: "AIzaSyD_zug3V2EunvkxmwRmuMUNrtxqVlPZDiE",
+  authDomain: "bemotr-hall-booking-system.firebaseapp.com",
+  projectId: "bemotr-hall-booking-system",
+  storageBucket: "bemotr-hall-booking-system.firebasestorage.app",
+  messagingSenderId: "183469732089",
+  appId: "1:183469732089:web:58dcef5edd849ea5523228",
 };
 
 const app = initializeApp(firebaseConfig);
