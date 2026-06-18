@@ -19,11 +19,7 @@
           <span>Hall Booking</span>
         </div>
       </div>
-      <ul class="navbar__links">
-        <li><a href="#halls" class="active">Halls</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <a href="login.html" class="btn btn--admin-login">Admin Login</a>
     </div>
   </nav>
 
@@ -31,139 +27,119 @@
   <section class="section section--bg" id="halls">
     <div class="container">
       <div class="section-header">
-        <p class="section-header__eyebrow">BEM On The Rock</p>
+        <p class="section-header__eyebrow">BEM On The Rock — Cyberjaya</p>
         <h2 class="section-header__title">Book a Hall</h2>
         <p class="section-header__subtitle">Select a space below to begin your booking request.</p>
       </div>
 
-      <!-- Carousel -->
-      <div class="carousel" id="hallCarousel">
-        <div class="carousel__track-wrapper">
-          <div class="carousel__track" id="carouselTrack">
+      <!-- Hall Grid -->
+      <div class="halls-grid">
 
-            <!-- Awan Hall -->
-            <div class="carousel__slide">
-              <div class="hall-card">
-                <div class="hall-card__accent" style="background: var(--hall-awan);"></div>
-                <div class="hall-card__body">
-                  <span class="hall-card__tag" style="background: var(--hall-awan);">Main Hall</span>
-                  <div class="hall-card__name">Awan Hall</div>
-                  <div class="hall-card__capacity">Capacity: <strong>up to 500 pax</strong></div>
-                  <ul class="hall-card__facilities">
-                    <li>3 LED Screens</li>
-                    <li>Moving &amp; LED Colourful Lighting</li>
-                    <li>Full PA System (max 4 wireless mics)</li>
-                    <li>Musical Instruments</li>
-                    <li>Rostrum / Podium</li>
-                    <li>Kids Room</li>
-                    <li>Crew: PA, Media, Live Streaming, Lights &amp; Stage, Security</li>
-                  </ul>
-                  <div class="hall-card__footer">
-                    <div class="hall-card__price">RM 200 <span>/ hour</span></div>
-                    <button class="btn btn--primary btn--sm" onclick="selectHall('awan')">Select Hall</button>
-                  </div>
-                </div>
-              </div>
+        <!-- Awan Hall -->
+        <div class="hall-card">
+          <div class="hall-card__accent" style="background: var(--hall-awan);"></div>
+          <div class="hall-card__body">
+            <span class="hall-card__tag" style="background: var(--hall-awan);">Main Hall</span>
+            <div class="hall-card__name">Awan Hall</div>
+            <div class="hall-card__capacity">Capacity: <strong>up to 500 pax</strong></div>
+            <ul class="hall-card__facilities">
+              <li>3 LED Screens</li>
+              <li>Moving &amp; LED Colourful Lighting</li>
+              <li>Full PA System (max 4 wireless mics)</li>
+              <li>Musical Instruments</li>
+              <li>Rostrum / Podium</li>
+              <li>Kids Room</li>
+              <li>Crew: PA, Media, Live Streaming, Lights &amp; Stage, Security</li>
+            </ul>
+            <div class="hall-card__footer">
+              <div class="hall-card__price">RM 200 <span>/ hour</span></div>
+              <button class="btn btn--primary" onclick="selectHall('awan')">Select Hall</button>
             </div>
-
-            <!-- Adiwira Hall -->
-            <div class="carousel__slide">
-              <div class="hall-card">
-                <div class="hall-card__accent" style="background: var(--hall-adiwira);"></div>
-                <div class="hall-card__body">
-                  <span class="hall-card__tag" style="background: var(--hall-adiwira);">Medium Hall</span>
-                  <div class="hall-card__name">Adiwira Hall</div>
-                  <div class="hall-card__capacity">Capacity: <strong>up to 150 pax</strong></div>
-                  <ul class="hall-card__facilities">
-                    <li>Full PA System (max 3 wireless mics)</li>
-                    <li>LCD Projector &amp; Screen</li>
-                    <li>Musical Instruments</li>
-                    <li>Rostrum / Podium</li>
-                    <li>Crew: PA, Media, Security</li>
-                  </ul>
-                  <div class="hall-card__footer">
-                    <div class="hall-card__price">RM 100 <span>/ hour</span></div>
-                    <button class="btn btn--primary btn--sm" onclick="selectHall('adiwira')">Select Hall</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Rock Essence -->
-            <div class="carousel__slide">
-              <div class="hall-card">
-                <div class="hall-card__accent" style="background: var(--hall-rock);"></div>
-                <div class="hall-card__body">
-                  <span class="hall-card__tag" style="background: var(--hall-rock);">Dining Hall</span>
-                  <div class="hall-card__name">Rock Essence</div>
-                  <div class="hall-card__capacity">Capacity: <strong>up to 80 pax</strong></div>
-                  <ul class="hall-card__facilities">
-                    <li>Chairs &amp; Dining Tables</li>
-                    <li>PA System (max 2 mics)</li>
-                    <li>Crew: Sound, Multimedia, Security</li>
-                  </ul>
-                  <div class="hall-card__footer">
-                    <div class="hall-card__price">RM 100 <span>/ hour</span></div>
-                    <button class="btn btn--primary btn--sm" onclick="selectHall('rock')">Select Hall</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Office Meeting Room -->
-            <div class="carousel__slide">
-              <div class="hall-card">
-                <div class="hall-card__accent" style="background: var(--hall-office);"></div>
-                <div class="hall-card__body">
-                  <span class="hall-card__tag" style="background: var(--hall-office);">Meeting Room</span>
-                  <div class="hall-card__name">Office Meeting Room</div>
-                  <div class="hall-card__capacity">Capacity: <strong>up to 20 pax</strong></div>
-                  <ul class="hall-card__facilities">
-                    <li>Chairs &amp; Tables</li>
-                    <li>LCD Projector</li>
-                    <li>Max 4 hours per booking</li>
-                    <li>Slots: 8:30am–12:30pm · 1:00–5:00pm · 6:00–10:00pm</li>
-                    <li>Crew: Security (night only)</li>
-                  </ul>
-                  <div class="hall-card__footer">
-                    <div class="hall-card__price">RM 50 <span>/ hour</span></div>
-                    <button class="btn btn--primary btn--sm" onclick="selectHall('office')">Select Hall</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- VIP Lounge -->
-            <div class="carousel__slide">
-              <div class="hall-card">
-                <div class="hall-card__accent" style="background: var(--hall-vip);"></div>
-                <div class="hall-card__body">
-                  <span class="hall-card__tag" style="background: var(--hall-vip); color: var(--black);">Lounge</span>
-                  <div class="hall-card__name">VIP Lounge</div>
-                  <div class="hall-card__capacity">Capacity: <strong>up to 12 pax</strong></div>
-                  <ul class="hall-card__facilities">
-                    <li>Sofa &amp; Chairs</li>
-                    <li>Microwave</li>
-                    <li>Food Serving Table</li>
-                    <li>Crew: Security (night only)</li>
-                  </ul>
-                  <div class="hall-card__footer">
-                    <div class="hall-card__price">RM 50 <span>/ hour</span></div>
-                    <button class="btn btn--primary btn--sm" onclick="selectHall('vip')">Select Hall</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /track -->
-        </div><!-- /wrapper -->
-
-        <div class="carousel__controls">
-          <button class="carousel__btn" id="prevBtn" onclick="slideCarousel(-1)" disabled>&#8592;</button>
-          <div class="carousel__dots" id="carouselDots"></div>
-          <button class="carousel__btn" id="nextBtn" onclick="slideCarousel(1)">&#8594;</button>
+          </div>
         </div>
-      </div><!-- /carousel -->
+
+        <!-- Adiwira Hall -->
+        <div class="hall-card">
+          <div class="hall-card__accent" style="background: var(--hall-adiwira);"></div>
+          <div class="hall-card__body">
+            <span class="hall-card__tag" style="background: var(--hall-adiwira);">Medium Hall</span>
+            <div class="hall-card__name">Adiwira Hall</div>
+            <div class="hall-card__capacity">Capacity: <strong>up to 150 pax</strong></div>
+            <ul class="hall-card__facilities">
+              <li>Full PA System (max 3 wireless mics)</li>
+              <li>LCD Projector &amp; Screen</li>
+              <li>Musical Instruments</li>
+              <li>Rostrum / Podium</li>
+              <li>Crew: PA, Media, Security</li>
+            </ul>
+            <div class="hall-card__footer">
+              <div class="hall-card__price">RM 100 <span>/ hour</span></div>
+              <button class="btn btn--primary" onclick="selectHall('adiwira')">Select Hall</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rock Essence -->
+        <div class="hall-card">
+          <div class="hall-card__accent" style="background: var(--hall-rock);"></div>
+          <div class="hall-card__body">
+            <span class="hall-card__tag" style="background: var(--hall-rock);">Dining Hall</span>
+            <div class="hall-card__name">Rock Essence</div>
+            <div class="hall-card__capacity">Capacity: <strong>up to 80 pax</strong></div>
+            <ul class="hall-card__facilities">
+              <li>Chairs &amp; Dining Tables</li>
+              <li>PA System (max 2 mics)</li>
+              <li>Crew: Sound, Multimedia, Security</li>
+            </ul>
+            <div class="hall-card__footer">
+              <div class="hall-card__price">RM 100 <span>/ hour</span></div>
+              <button class="btn btn--primary" onclick="selectHall('rock')">Select Hall</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Office Meeting Room -->
+        <div class="hall-card">
+          <div class="hall-card__accent" style="background: var(--hall-office);"></div>
+          <div class="hall-card__body">
+            <span class="hall-card__tag" style="background: var(--hall-office);">Meeting Room</span>
+            <div class="hall-card__name">Office Meeting Room</div>
+            <div class="hall-card__capacity">Capacity: <strong>up to 20 pax</strong></div>
+            <ul class="hall-card__facilities">
+              <li>Chairs &amp; Tables</li>
+              <li>LCD Projector</li>
+              <li>Max 4 hours per booking</li>
+              <li>Slots: 8:30am–12:30pm · 1:00–5:00pm · 6:00–10:00pm</li>
+              <li>Crew: Security (night only)</li>
+            </ul>
+            <div class="hall-card__footer">
+              <div class="hall-card__price">RM 50 <span>/ hour</span></div>
+              <button class="btn btn--primary" onclick="selectHall('office')">Select Hall</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIP Lounge -->
+        <div class="hall-card">
+          <div class="hall-card__accent" style="background: var(--hall-vip);"></div>
+          <div class="hall-card__body">
+            <span class="hall-card__tag" style="background: var(--hall-vip); color: var(--black);">Lounge</span>
+            <div class="hall-card__name">VIP Lounge</div>
+            <div class="hall-card__capacity">Capacity: <strong>up to 12 pax</strong></div>
+            <ul class="hall-card__facilities">
+              <li>Sofa &amp; Chairs</li>
+              <li>Microwave</li>
+              <li>Food Serving Table</li>
+              <li>Crew: Security (night only)</li>
+            </ul>
+            <div class="hall-card__footer">
+              <div class="hall-card__price">RM 50 <span>/ hour</span></div>
+              <button class="btn btn--primary" onclick="selectHall('vip')">Select Hall</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /halls-grid -->
     </div>
   </section>
 

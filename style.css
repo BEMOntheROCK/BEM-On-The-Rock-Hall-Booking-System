@@ -108,9 +108,9 @@ h1, h2, h3, h4 {
   color: var(--white);
 }
 
-h1 { font-size: clamp(1.8rem, 4vw, 3rem);   font-weight: 700; }
-h2 { font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 600; }
-h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 600; }
+h1 { font-size: clamp(2rem, 4vw, 3.2rem);   font-weight: 700; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 600; }
+h3 { font-size: clamp(1.17rem, 2vw, 1.5rem); font-weight: 600; }
 h4 { font-size: 1rem; font-weight: 600; }
 
 p {
@@ -165,14 +165,14 @@ p {
 .navbar__name {
   font-family: var(--font-display);
   color: var(--white);
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   font-weight: 600;
   line-height: 1.2;
 }
 
 .navbar__name span {
   display: block;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-family: var(--font-body);
   font-weight: 400;
   color: var(--marigold);
@@ -188,7 +188,7 @@ p {
 
 .navbar__links a {
   color: var(--silver);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.03em;
   transition: color var(--transition);
@@ -209,7 +209,7 @@ p {
 }
 
 .section-header__eyebrow {
-  font-size: 0.72rem;
+  font-size: 0.79rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -223,7 +223,7 @@ p {
 
 .section-header__subtitle {
   color: var(--silver);
-  font-size: 0.95rem;
+  font-size: 1.02rem;
   max-width: 500px;
 }
 
@@ -237,10 +237,10 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  padding: 0.65rem 1.5rem;
+  padding: 0.72rem 1.5rem;
   border-radius: var(--radius-md);
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   border: 1.5px solid transparent;
@@ -297,8 +297,8 @@ p {
 }
 .btn--success:hover { opacity: 0.85; transform: translateY(-1px); }
 
-.btn--sm  { padding: 0.4rem 0.9rem;  font-size: 0.78rem; }
-.btn--lg  { padding: 0.85rem 2rem;   font-size: 0.95rem; }
+.btn--sm  { padding: 0.4rem 0.97rem;  font-size: 0.85rem; }
+.btn--lg  { padding: 0.92rem 2rem;   font-size: 1.02rem; }
 
 .btn:disabled {
   opacity: 0.4;
@@ -340,7 +340,7 @@ p {
 
 .hall-card__tag {
   display: inline-block;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -359,7 +359,7 @@ p {
 }
 
 .hall-card__capacity {
-  font-size: 0.82rem;
+  font-size: 0.89rem;
   color: var(--silver-dark);
   margin-bottom: var(--space-md);
 }
@@ -375,7 +375,7 @@ p {
 }
 
 .hall-card__facilities li {
-  font-size: 0.83rem;
+  font-size: 0.9rem;
   color: var(--silver);
   padding: 0.22rem 0;
   display: flex;
@@ -391,7 +391,7 @@ p {
 .hall-card__facilities li::before {
   content: '✓';
   font-weight: 700;
-  font-size: 0.72rem;
+  font-size: 0.79rem;
   color: var(--marigold);
   margin-top: 3px;
   flex-shrink: 0;
@@ -415,7 +415,7 @@ p {
 
 .hall-card__price span {
   font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: 0.79rem;
   font-weight: 400;
   color: var(--silver-dark);
 }
@@ -522,7 +522,7 @@ p {
 }
 
 .info-strip__label {
-  font-size: 0.7rem;
+  font-size: 0.77rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -532,7 +532,7 @@ p {
 
 .info-strip__value {
   color: var(--silver);
-  font-size: 0.85rem;
+  font-size: 0.92rem;
 }
 
 /* --- How It Works --- */
@@ -561,7 +561,7 @@ p {
 }
 
 .how-step__num {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -575,7 +575,7 @@ p {
 }
 
 .how-step p {
-  font-size: 0.83rem;
+  font-size: 0.9rem;
   color: var(--silver-dark);
 }
 
@@ -604,7 +604,7 @@ p {
 
 .rules-list p {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   color: var(--silver);
 }
 
@@ -630,7 +630,7 @@ p {
 }
 
 .payment-option__label {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -641,12 +641,12 @@ p {
 .payment-option__title {
   color: var(--white);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1.02rem;
   margin-bottom: var(--space-xs);
 }
 
 .payment-option p {
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   margin: 0;
 }
 
@@ -656,7 +656,7 @@ p {
   color: var(--marigold);
   padding: 0.1rem 0.4rem;
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.97rem;
 }
 
 /* --- Forms --- */
@@ -664,7 +664,7 @@ p {
 
 .form-label {
   display: block;
-  font-size: 0.82rem;
+  font-size: 0.89rem;
   font-weight: 600;
   color: var(--silver-light);
   margin-bottom: var(--space-xs);
@@ -680,11 +680,11 @@ p {
 .form-select,
 .form-textarea {
   width: 100%;
-  padding: 0.65rem 0.9rem;
+  padding: 0.72rem 0.97rem;
   border: 1.5px solid var(--border-strong);
   border-radius: var(--radius-md);
   font-family: var(--font-body);
-  font-size: 0.92rem;
+  font-size: 0.99rem;
   color: var(--white);
   background-color: var(--black-mid);
   transition: border-color var(--transition), box-shadow var(--transition);
@@ -714,13 +714,13 @@ p {
 }
 
 .form-hint {
-  font-size: 0.76rem;
+  font-size: 0.83rem;
   color: var(--silver-dark);
   margin-top: var(--space-xs);
 }
 
 .form-error {
-  font-size: 0.76rem;
+  font-size: 0.83rem;
   color: var(--danger);
   margin-top: var(--space-xs);
 }
@@ -743,9 +743,9 @@ p {
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.18rem 0.6rem;
+  padding: 0.18rem 0.67rem;
   border-radius: 999px;
-  font-size: 0.7rem;
+  font-size: 0.77rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -776,9 +776,9 @@ p {
   background: var(--black-soft);
   border: 1px solid var(--border-strong);
   color: var(--white);
-  padding: 0.72rem 1.1rem;
+  padding: 0.79rem 1.17rem;
   border-radius: var(--radius-md);
-  font-size: 0.86rem;
+  font-size: 0.93rem;
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
@@ -849,14 +849,14 @@ p {
 
 .modal__title {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.22rem;
   color: var(--white);
 }
 
 .modal__close {
   background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.27rem;
   color: var(--silver-dark);
   cursor: pointer;
   padding: 0.2rem 0.4rem;
@@ -942,7 +942,7 @@ p {
 }
 
 .detail-section__title {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -956,7 +956,7 @@ p {
   display: flex;
   gap: var(--space-md);
   padding: var(--space-sm) 0;
-  font-size: 0.86rem;
+  font-size: 0.93rem;
 }
 
 .detail-row__label {
@@ -979,9 +979,9 @@ p {
 }
 
 .tab-btn {
-  padding: 0.6rem 1.3rem;
+  padding: 0.67rem 1.3rem;
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 600;
   color: var(--silver-dark);
   background: none;
@@ -1011,13 +1011,13 @@ table {
   width: 100%;
   border-collapse: collapse;
   background: var(--black-soft);
-  font-size: 0.86rem;
+  font-size: 0.93rem;
 }
 
 thead th {
-  padding: 0.7rem 1rem;
+  padding: 0.77rem 1rem;
   text-align: left;
-  font-size: 0.7rem;
+  font-size: 0.77rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1027,7 +1027,7 @@ thead th {
 }
 
 tbody td {
-  padding: 0.85rem 1rem;
+  padding: 0.92rem 1rem;
   border-bottom: 1px solid var(--border);
   color: var(--silver-light);
   vertical-align: middle;
@@ -1076,7 +1076,7 @@ tbody tr:hover {
 }
 
 .login-card__logo p {
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   color: var(--marigold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1097,7 +1097,7 @@ tbody tr:hover {
   background: var(--black-mid);
   padding: 0.5rem;
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.77rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1124,13 +1124,13 @@ tbody tr:hover {
 }
 
 .calendar-day__num {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--silver-dark);
   margin-bottom: 0.25rem;
 }
 
 .calendar-event {
-  font-size: 0.7rem;
+  font-size: 0.77rem;
   padding: 0.15rem 0.35rem;
   border-radius: var(--radius-sm);
   margin-bottom: 2px;
@@ -1152,7 +1152,7 @@ tbody tr:hover {
 
 .footer p {
   color: var(--silver-dark);
-  font-size: 0.8rem;
+  font-size: 0.87rem;
 }
 
 .footer strong { color: var(--marigold); }
@@ -1190,7 +1190,7 @@ tbody tr:hover {
 
 .empty-state__text {
   color: var(--silver-dark);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
 }
 
 /* --- Back Link --- */
@@ -1198,7 +1198,7 @@ tbody tr:hover {
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: var(--silver);
   margin-bottom: var(--space-lg);
@@ -1236,7 +1236,7 @@ tbody tr:hover {
 
 .hall-banner__tag {
   display: inline-block;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1254,7 +1254,7 @@ tbody tr:hover {
 }
 
 .hall-banner__meta {
-  font-size: 0.82rem;
+  font-size: 0.89rem;
   color: var(--silver-dark);
 }
 
@@ -1270,7 +1270,7 @@ tbody tr:hover {
 .hall-banner__price span {
   display: block;
   font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: 0.79rem;
   font-weight: 400;
   color: var(--silver-dark);
   text-align: right;
@@ -1278,7 +1278,7 @@ tbody tr:hover {
 
 /* --- Form Section Label --- */
 .form-section-label {
-  font-size: 0.7rem;
+  font-size: 0.77rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1305,9 +1305,9 @@ tbody tr:hover {
   align-items: center;
   gap: var(--space-sm);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.97rem;
   color: var(--silver-light);
-  padding: 0.6rem 0.8rem;
+  padding: 0.67rem 0.87rem;
   border: 1.5px solid var(--border-strong);
   border-radius: var(--radius-md);
   transition: border-color var(--transition), background var(--transition);
@@ -1367,7 +1367,7 @@ tbody tr:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.86rem;
+  font-size: 0.93rem;
   color: var(--silver);
   padding: 0.3rem 0;
   border-bottom: 1px solid var(--border);
@@ -1380,12 +1380,12 @@ tbody tr:hover {
 .cost-preview__row--total {
   font-weight: 700;
   color: var(--marigold);
-  font-size: 0.95rem;
+  font-size: 1.02rem;
   padding-top: var(--space-sm);
 }
 
 .cost-preview__note {
-  font-size: 0.74rem;
+  font-size: 0.81rem;
   color: var(--silver-dark);
   margin-top: var(--space-sm);
   font-style: italic;
@@ -1461,7 +1461,7 @@ tbody tr:hover {
   background: var(--marigold-glow);
   border: 1.5px solid var(--marigold);
   color: var(--marigold);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -1473,12 +1473,12 @@ tbody tr:hover {
 .next-steps strong {
   display: block;
   color: var(--white);
-  font-size: 0.9rem;
+  font-size: 0.97rem;
   margin-bottom: 2px;
 }
 
 .next-steps p {
-  font-size: 0.83rem;
+  font-size: 0.9rem;
   color: var(--silver-dark);
   margin: 0;
 }
@@ -1536,9 +1536,9 @@ tbody tr:hover {
   background: rgba(224,82,82,0.1);
   border: 1px solid rgba(224,82,82,0.3);
   border-radius: var(--radius-md);
-  padding: 0.65rem 0.9rem;
+  padding: 0.72rem 0.97rem;
   margin-bottom: var(--space-lg);
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   color: var(--danger);
 }
 
@@ -1553,7 +1553,7 @@ tbody tr:hover {
 
 .password-toggle {
   position: absolute;
-  right: 0.6rem;
+  right: 0.67rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -1601,7 +1601,7 @@ tbody tr:hover {
 }
 
 .stat-card__label {
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1617,8 +1617,8 @@ tbody tr:hover {
 
 .form-input--sm,
 .form-select--sm {
-  padding: 0.45rem 0.7rem;
-  font-size: 0.82rem;
+  padding: 0.45rem 0.77rem;
+  font-size: 0.89rem;
 }
 
 @media (max-width: 768px) {
@@ -1649,7 +1649,7 @@ tbody tr:hover {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--silver-dark);
 }
 
@@ -1662,8 +1662,8 @@ tbody tr:hover {
 
 /* --- Filter Buttons --- */
 .filter-btn {
-  padding: 0.35rem 0.85rem;
-  font-size: 0.78rem;
+  padding: 0.35rem 0.92rem;
+  font-size: 0.85rem;
   font-weight: 600;
   border-radius: 999px;
   border: 1.5px solid var(--border-strong);
@@ -1701,7 +1701,7 @@ tbody tr:hover {
   background: var(--black-mid);
   padding: 0.55rem;
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.77rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1736,14 +1736,14 @@ tbody tr:hover {
 }
 
 .calendar-day__num {
-  font-size: 0.76rem;
+  font-size: 0.83rem;
   color: var(--silver-dark);
   margin-bottom: 0.3rem;
   font-weight: 500;
 }
 
 .calendar-event {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   padding: 0.18rem 0.4rem;
   border-radius: var(--radius-sm);
   margin-bottom: 2px;
@@ -1762,7 +1762,7 @@ tbody tr:hover {
 }
 
 .calendar-more {
-  font-size: 0.66rem;
+  font-size: 0.73rem;
   color: var(--silver-dark);
   padding: 0.1rem 0.3rem;
   cursor: pointer;
@@ -1777,8 +1777,8 @@ tbody tr:hover {
 @media (max-width: 768px) {
   .cal-legend { gap: var(--space-md); }
   .calendar-day { min-height: 60px; padding: 0.25rem; }
-  .calendar-event { font-size: 0.6rem; }
-  .cal-nav h3 { font-size: 1.1rem; min-width: 160px; }
+  .calendar-event { font-size: 0.67rem; }
+  .cal-nav h3 { font-size: 1.17rem; min-width: 160px; }
 }
 
 /* --- Calendar Nav --- */
@@ -1803,7 +1803,7 @@ tbody tr:hover {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--silver);
 }
 
@@ -1816,9 +1816,9 @@ tbody tr:hover {
 
 /* --- Hall Filter Buttons --- */
 .filter-btn {
-  padding: 0.35rem 0.85rem;
+  padding: 0.35rem 0.92rem;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 600;
   background: var(--black-soft);
   border: 1.5px solid var(--border-strong);
@@ -1854,7 +1854,7 @@ tbody tr:hover {
   background: var(--black-mid);
   padding: 0.5rem;
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.77rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1885,13 +1885,13 @@ tbody tr:hover {
 }
 
 .calendar-day__num {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--silver-dark);
   margin-bottom: 0.3rem;
 }
 
 .calendar-event {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   padding: 0.18rem 0.4rem;
   border-radius: var(--radius-sm);
   margin-bottom: 2px;
@@ -1917,12 +1917,12 @@ tbody tr:hover {
   }
 
   .calendar-event {
-    font-size: 0.6rem;
+    font-size: 0.67rem;
     padding: 0.12rem 0.25rem;
   }
 
   .cal-nav h3 {
-    font-size: 1.1rem !important;
+    font-size: 1.17rem !important;
     min-width: 160px !important;
   }
 }
@@ -1931,7 +1931,7 @@ tbody tr:hover {
 .staff-login-link {
   display: inline-block;
   margin-top: var(--space-sm);
-  font-size: 0.72rem;
+  font-size: 0.79rem;
   color: var(--black-mid);
   text-decoration: none;
   letter-spacing: 0.04em;
@@ -1962,4 +1962,47 @@ tbody tr:hover {
 .section--bg > * {
   position: relative;
   z-index: 1;
+}
+
+/* --- Halls Grid (replaces carousel) --- */
+.halls-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+  .halls-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .halls-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Admin Login Button (navbar) --- */
+.btn--admin-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.3rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--marigold);
+  background: transparent;
+  border: 2px solid var(--marigold);
+  text-decoration: none;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.btn--admin-login:hover {
+  background: var(--marigold);
+  color: var(--black);
 }
