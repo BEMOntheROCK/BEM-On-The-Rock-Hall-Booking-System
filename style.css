@@ -1941,3 +1941,25 @@ tbody tr:hover {
 .staff-login-link:hover {
   color: var(--silver-dark);
 }
+
+/* --- Background Image Section (carousel area) --- */
+.section--bg {
+  position: relative;
+  background-image: url('assets/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.section--bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.82);
+  z-index: 0;
+}
+
+.section--bg > * {
+  position: relative;
+  z-index: 1;
+}
