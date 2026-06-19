@@ -335,7 +335,6 @@ window.generateInvoice = function(id) {
   const depositPaid = b.depositAmount  ? `RM ${parseFloat(b.depositAmount).toFixed(2)}`  : '—';
   const balancePaid = b.balanceAmount  ? `RM ${parseFloat(b.balanceAmount).toFixed(2)}`  : '—';
   const totalEst    = b.estimatedTotal ? `RM ${parseFloat(b.estimatedTotal).toFixed(2)}` : '—';
-  const memberLabel = b.memberStatus === 'member' ? 'Church Member' : 'Outsider / Non-member';
 
   const win = window.open('', '_blank');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Invoice — ${b.name1}</title>
@@ -358,12 +357,12 @@ window.generateInvoice = function(id) {
     .inv-footer{margin-top:40px;font-size:11px;color:#666;text-align:center;border-top:1px solid #ddd;padding-top:16px;}
     @media print{body{padding:24px;}}
   </style></head><body>
-  <div class="inv-header"><div><h1>BEM On The Rock</h1><p>Hall Booking Invoice</p><p style="margin-top:8px;color:#aaa;font-size:11px;">Generated: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})}</p></div><div style='text-align:right'><span class="inv-badge">${payStatus}</span><div class="inv-ref">Ref: ${b.referenceNumber || '—'}</div></div></div>
+  <div class="inv-header"><div><h1>BEM On The Rock</h1><p>Hall Booking Invoice</p><p style="margin-top:8px;color:#aaa;font-size:11px;">Generated: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})}</p>
+      <p style="margin-top:4px;font-family:'Courier New',monospace;font-size:12px;color:#555;">${b.referenceNumber || ''}</p></div><div style='text-align:right'><span class="inv-badge">${payStatus}</span><div class="inv-ref">Ref: ${b.referenceNumber || '—'}</div></div></div>
   <div class="inv-section"><h3>Renter Details</h3>
     <div class="inv-row"><span>Name</span><span>${b.name1}${b.name2?` &amp; ${b.name2}`:''}</span></div>
     <div class="inv-row"><span>Phone</span><span>${b.phone1}${b.phone2?` / ${b.phone2}`:''}</span></div>
     <div class="inv-row"><span>Church / Organisation</span><span>${b.church}</span></div>
-    <div class="inv-row"><span>Member Status</span><span>${memberLabel}</span></div>
   </div>
   <div class="inv-section"><h3>Booking Details</h3>
     <div class="inv-row"><span>Hall</span><span>${b.hallName}</span></div>

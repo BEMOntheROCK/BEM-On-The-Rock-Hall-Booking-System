@@ -493,7 +493,6 @@ window.generateInvoice = function(id) {
   const depositPaid   = b.depositAmount  ? `RM ${parseFloat(b.depositAmount).toFixed(2)}`  : '—';
   const balancePaid   = b.balanceAmount  ? `RM ${parseFloat(b.balanceAmount).toFixed(2)}`  : '—';
   const totalEst      = b.estimatedTotal ? `RM ${parseFloat(b.estimatedTotal).toFixed(2)}` : '—';
-  const memberLabel   = b.memberStatus === 'member' ? 'Church Member' : 'Outsider / Non-member';
 
   const invoiceWin = window.open('', '_blank');
   invoiceWin.document.write(`
@@ -537,7 +536,6 @@ window.generateInvoice = function(id) {
     <div class="inv-row"><span>Name</span><span>${b.name1}${b.name2 ? ` &amp; ${b.name2}` : ''}</span></div>
     <div class="inv-row"><span>Phone</span><span>${b.phone1}${b.phone2 ? ` / ${b.phone2}` : ''}</span></div>
     <div class="inv-row"><span>Church / Organisation</span><span>${b.church}</span></div>
-    <div class="inv-row"><span>Member Status</span><span>${memberLabel}</span></div>
   </div>
 
   <div class="inv-section">
