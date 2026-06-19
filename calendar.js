@@ -373,10 +373,17 @@ window.generateInvoice = function(id) {
     <div class="inv-row"><span>Duration</span><span>${b.durationHours} hour${b.durationHours!==1?'s':''}</span></div>
     <div class="inv-row"><span>Rate</span><span>RM ${b.hallRate} / hour</span></div>
   </div>
+  <div class="inv-section"><h3>Charges</h3>
+    <div class="inv-row"><span>Hall Rental (${b.durationHours} hr × RM ${b.hallRate})</span><span>${b.hallTotal ? `RM ${parseFloat(b.hallTotal).toFixed(2)}` : totalEst}</span></div>
+    ${b.crewSelections && b.crewSelections.length > 0 ? b.crewSelections.map(c =>
+      `<div class="inv-row"><span>Crew — ${c.role} (${c.days.map(d => d === 'rehearsal' ? 'Rehearsal' : 'Event Day').join(' + ')})</span><span>RM ${c.cost}.00</span></div>`
+    ).join('') : ''}
+    ${b.crewTotal ? `<div class="inv-row"><span>Crew Subtotal</span><span>RM ${parseFloat(b.crewTotal).toFixed(2)}</span></div>` : ''}
+    <div class="inv-total"><span>Estimated Total</span><span>${totalEst}</span></div>
+  </div>
   <div class="inv-section"><h3>Payment</h3>
     <div class="inv-row"><span>Deposit Paid</span><span>${depositPaid}${b.depositMethod?` (${b.depositMethod})`:''}${b.depositReceipt?` — ${b.depositReceipt}`:''}${b.depositDate?` — ${formatDate(b.depositDate)}`:''}</span></div>
     <div class="inv-row"><span>Balance Paid</span><span>${balancePaid}${b.balanceMethod?` (${b.balanceMethod})`:''}${b.balanceReceipt?` — ${b.balanceReceipt}`:''}${b.balanceDate?` — ${formatDate(b.balanceDate)}`:''}</span></div>
-    <div class="inv-total"><span>Estimated Total</span><span>${totalEst}</span></div>
   </div>
   <div class="inv-footer"><p>Payment via cash at church office or bank transfer — Public Bank Account No: <strong>3187701204</strong></p><p style="margin-top:4px;">Remark: SEWA HALL &amp; YOUR NAME &nbsp;|&nbsp; BEM On The Rock Hall Booking System</p></div>
   <script>window.onload=()=>window.print();<\/script></body></html>`);

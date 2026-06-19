@@ -262,8 +262,25 @@ function renderPanel(b) {
       <div class="detail-row"><span class="detail-row__label">Date</span><span class="detail-row__value">${formatDate(b.eventDate)}</span></div>
       <div class="detail-row"><span class="detail-row__label">Time</span><span class="detail-row__value">${formatTime(b.startTime)} – ${formatTime(b.endTime)}</span></div>
       <div class="detail-row"><span class="detail-row__label">Duration</span><span class="detail-row__value">${b.durationHours} hour${b.durationHours !== 1 ? 's' : ''}</span></div>
+      <div class="detail-row"><span class="detail-row__label">Hall Subtotal</span><span class="detail-row__value">${b.hallTotal ? `RM ${parseFloat(b.hallTotal).toFixed(2)}` : '—'}</span></div>
+      <div class="detail-row"><span class="detail-row__label">Crew Subtotal</span><span class="detail-row__value">${b.crewTotal ? `RM ${parseFloat(b.crewTotal).toFixed(2)}` : 'RM 0.00'}</span></div>
       <div class="detail-row"><span class="detail-row__label">Est. Total</span><span class="detail-row__value" style="color:var(--marigold); font-weight:600;">${estimatedTotal}</span></div>
     </div>
+
+    <!-- Crew Details -->
+    ${b.crewSelections && b.crewSelections.length > 0 ? `
+    <div class="detail-section">
+      <div class="detail-section__title">Crew Requirements</div>
+      ${b.crewSelections.map(c => `
+        <div class="detail-row">
+          <span class="detail-row__label">${c.role}</span>
+          <span class="detail-row__value">
+            ${c.days.map(d => d === 'rehearsal' ? 'Rehearsal Day' : 'Event Day').join(' + ')}
+            <span style="color:var(--marigold); font-weight:600; margin-left:var(--space-sm);">RM ${c.cost}</span>
+          </span>
+        </div>
+      `).join('')}
+    </div>` : ''}
 
     <!-- Contact Details -->
     <div class="detail-section">

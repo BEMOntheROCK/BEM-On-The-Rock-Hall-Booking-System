@@ -5,19 +5,40 @@
 import { db } from "./firebase.js";
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── Year ──────────────────────────────────────────────────
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // ── Hall Data ─────────────────────────────────────────────
 const HALL_DATA = {
-  awan:    { name: 'Awan Hall',            tag: 'Main Hall',     capacity: 500, rate: 200, color: '#5BA4D8' },
-  adiwira: { name: 'Adiwira Hall',         tag: 'Medium Hall',   capacity: 150, rate: 100, color: '#9B8FE0' },
-  rock:    { name: 'Rock Essence',         tag: 'Dining Hall',   capacity: 80,  rate: 100, color: '#E0845A' },
-  office:  { name: 'Office Meeting Room',  tag: 'Meeting Room',  capacity: 20,  rate: 50,  color: '#5DC490', fixedSlots: true },
-  vip:     { name: 'VIP Lounge',           tag: 'Lounge',        capacity: 12,  rate: 50,  color: '#ECA820' },
+  awan: {
+    name: 'Awan Hall', tag: 'Main Hall', capacity: 500, rate: 200, color: '#5BA4D8',
+    supportsRehearsal: true,
+    crew: ['PA System', 'Media — Internal Screen', 'Media — Live Streaming', 'Light & Stage Crew', 'Security & Maintenance'],
+  },
+  adiwira: {
+    name: 'Adiwira Hall', tag: 'Medium Hall', capacity: 150, rate: 100, color: '#9B8FE0',
+    supportsRehearsal: true,
+    crew: ['PA System', 'Media — Internal Screen', 'Security & Maintenance'],
+  },
+  rock: {
+    name: 'Rock Essence', tag: 'Dining Hall', capacity: 80, rate: 100, color: '#E0845A',
+    supportsRehearsal: true,
+    crew: ['Sound Man', 'Multimedia', 'Security & Maintenance'],
+  },
+  office: {
+    name: 'Office Meeting Room', tag: 'Meeting Room', capacity: 20, rate: 50, color: '#5DC490',
+    fixedSlots: true, supportsRehearsal: false,
+    crew: ['Security & Maintenance'],
+  },
+  vip: {
+    name: 'VIP Lounge', tag: 'Lounge', capacity: 12, rate: 50, color: '#ECA820',
+    supportsRehearsal: false,
+    crew: ['Security & Maintenance'],
+  },
 };
 
-// ── Load Hall from sessionStorage ─────────────────────────
+const CREW_RATE = 50;
+
+// ── Load Hall ─────────────────────────────────────────────
 let selectedHall = null;
 
 function loadHall() {
@@ -43,49 +64,94 @@ function loadHall() {
 
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('eventDate').min = today;
+
+  renderCrewList(hall);
 }
 
-loadHall();
-
-// ── Dynamic Form: Event Purpose ───────────────────────────
-const purposeSelect    = document.getElementById('eventPurpose');
-const secondarySection = document.getElementById('secondarySection');
-const primaryLabel     = document.getElementById('primaryLabel');
-const secondaryLabel   = document.getElementById('secondaryLabel');
-const otherGroup       = document.getElementById('otherPurposeGroup');
-const otherInput       = document.getElementById('otherPurpose');
-const name2Input       = document.getElementById('name2');
-const phone2Input      = document.getElementById('phone2');
-
-purposeSelect.addEventListener('change', () => {
-  const val = purposeSelect.value;
-
-  if (val === 'other') {
-    otherGroup.style.display = 'block';
-    otherInput.required      = true;
-  } else {
-    otherGroup.style.display = 'none';
-    otherInput.required      = false;
-    otherInput.value         = '';
+// ── Render Crew Checkboxes ────────────────────────────────
+function renderCrewList(hall) {
+  const container = document.getElementById('crewList');
+  if (!hall.crew || hall.crew.length === 0) {
+    container.innerHTML = '<p style="font-size:0.9rem; color:var(--silver-dark);">No crew available for this hall.</p>';
+    return;
   }
 
-  if (val === 'engagement' || val === 'wedding') {
-    secondarySection.style.display = 'block';
-    name2Input.required            = true;
-    phone2Input.required           = true;
-    primaryLabel.textContent       = val === 'engagement' ? 'Your Details (Bride/Groom-to-be)' : "Bride's Details";
-    secondaryLabel.textContent     = val === 'engagement' ? "Partner's Details (Bride/Groom-to-be)" : "Groom's Details";
-  } else {
-    secondarySection.style.display = 'none';
-    name2Input.required            = false;
-    phone2Input.required           = false;
-    name2Input.value               = '';
-    phone2Input.value              = '';
-    primaryLabel.textContent       = 'Your Details';
-  }
+  container.innerHTML = hall.crew.map((role, i) => `
+    <div class="crew-item" id="crewItem-${i}">
+      <label class="crew-checkbox-label">
+        <input type="checkbox" class="crew-check" data-index="${i}" data-role="${role}" onchange="onCrewCheck(${i})" />
+        <span class="crew-check-custom"></span>
+        <span class="crew-role">${role}</span>
+        <span class="crew-base-rate">RM ${CREW_RATE}</span>
+      </label>
+      <div class="crew-attendance" id="crewAttendance-${i}" style="display:none;">
+        <p style="font-size:0.82rem; color:var(--silver-dark); margin-bottom:var(--space-sm);">Select attendance day(s):</p>
+        <div class="crew-attendance-options">
+          ${hall.supportsRehearsal ? `
+          <label class="crew-attendance-label">
+            <input type="checkbox" class="crew-day" data-index="${i}" data-day="rehearsal" onchange="onAttendanceChange(${i})" />
+            <span class="crew-day-custom"></span>
+            Rehearsal Day <em>(RM ${CREW_RATE})</em>
+          </label>` : ''}
+          <label class="crew-attendance-label">
+            <input type="checkbox" class="crew-day" data-index="${i}" data-day="event" onchange="onAttendanceChange(${i})" />
+            <span class="crew-day-custom"></span>
+            Event Day <em>(RM ${CREW_RATE})</em>
+          </label>
+        </div>
+        <div class="crew-item-cost" id="crewCost-${i}" style="display:none;">
+          Cost: <strong id="crewCostVal-${i}">RM 0</strong>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
 
+// ── Crew Checkbox Handlers ────────────────────────────────
+window.onCrewCheck = function(i) {
+  const checked    = document.querySelector(`.crew-check[data-index="${i}"]`).checked;
+  const attendance = document.getElementById(`crewAttendance-${i}`);
+  attendance.style.display = checked ? 'block' : 'none';
+
+  // Uncheck all day options when crew is unchecked
+  if (!checked) {
+    document.querySelectorAll(`.crew-day[data-index="${i}"]`).forEach(cb => cb.checked = false);
+    document.getElementById(`crewCost-${i}`).style.display = 'none';
+  }
   updateCostPreview();
-});
+};
+
+window.onAttendanceChange = function(i) {
+  const days    = document.querySelectorAll(`.crew-day[data-index="${i}"]:checked`).length;
+  const costEl  = document.getElementById(`crewCost-${i}`);
+  const costVal = document.getElementById(`crewCostVal-${i}`);
+
+  if (days > 0) {
+    costVal.textContent    = `RM ${days * CREW_RATE}`;
+    costEl.style.display   = 'block';
+  } else {
+    costEl.style.display   = 'none';
+  }
+  updateCostPreview();
+};
+
+// ── Collect Crew Selections ───────────────────────────────
+function getCrewSelections() {
+  const selections = [];
+  document.querySelectorAll('.crew-check:checked').forEach(cb => {
+    const i    = cb.dataset.index;
+    const role = cb.dataset.role;
+    const days = Array.from(document.querySelectorAll(`.crew-day[data-index="${i}"]:checked`))
+                      .map(d => d.dataset.day);
+    const cost = days.length * CREW_RATE;
+    selections.push({ role, days, cost });
+  });
+  return selections;
+}
+
+function getCrewTotal() {
+  return getCrewSelections().reduce((sum, c) => sum + c.cost, 0);
+}
 
 // ── Cost Preview ──────────────────────────────────────────
 const startTimeInput = document.getElementById('startTime');
@@ -117,18 +183,71 @@ function updateCostPreview() {
 
   if (durationMins <= 0) { costPreview.style.display = 'none'; return; }
 
-  const hours = durationMins / 60;
-  const total = hours * hall.rate;
+  const hours      = durationMins / 60;
+  const hallTotal  = hours * hall.rate;
+  const crewTotal  = getCrewTotal();
+  const grandTotal = hallTotal + crewTotal;
 
-  document.getElementById('previewDuration').textContent = `${hours % 1 === 0 ? hours : hours.toFixed(1)} hour${hours !== 1 ? 's' : ''}`;
-  document.getElementById('previewRate').textContent     = `RM ${hall.rate} / hour`;
-  document.getElementById('previewTotal').textContent    = `RM ${total.toFixed(2)}`;
+  document.getElementById('previewDuration').textContent  = `${hours % 1 === 0 ? hours : hours.toFixed(1)} hour${hours !== 1 ? 's' : ''}`;
+  document.getElementById('previewRate').textContent      = `RM ${hall.rate} / hour`;
+  document.getElementById('previewHallTotal').textContent = `RM ${hallTotal.toFixed(2)}`;
+  document.getElementById('previewTotal').textContent     = `RM ${grandTotal.toFixed(2)}`;
+
+  const crewRow = document.getElementById('previewCrewRow');
+  if (crewTotal > 0) {
+    document.getElementById('previewCrewTotal').textContent = `RM ${crewTotal.toFixed(2)}`;
+    crewRow.style.display = 'flex';
+  } else {
+    crewRow.style.display = 'none';
+  }
+
   costPreview.style.display = 'block';
 }
 
 startTimeInput.addEventListener('change', updateCostPreview);
 endTimeInput.addEventListener('change', updateCostPreview);
 timeSlotSelect.addEventListener('change', updateCostPreview);
+
+// ── Dynamic Form: Event Purpose ───────────────────────────
+const purposeSelect    = document.getElementById('eventPurpose');
+const secondarySection = document.getElementById('secondarySection');
+const primaryLabel     = document.getElementById('primaryLabel');
+const secondaryLabel   = document.getElementById('secondaryLabel');
+const otherGroup       = document.getElementById('otherPurposeGroup');
+const otherInput       = document.getElementById('otherPurpose');
+const name2Input       = document.getElementById('name2');
+const phone2Input      = document.getElementById('phone2');
+
+purposeSelect.addEventListener('change', () => {
+  const val = purposeSelect.value;
+
+  otherGroup.style.display = val === 'other' ? 'block' : 'none';
+  otherInput.required      = val === 'other';
+  if (val !== 'other') otherInput.value = '';
+
+  if (val === 'engagement' || val === 'wedding') {
+    secondarySection.style.display = 'block';
+    name2Input.required            = true;
+    phone2Input.required           = true;
+    primaryLabel.textContent       = val === 'engagement' ? 'Your Details (Bride/Groom-to-be)' : "Bride's Details";
+    secondaryLabel.textContent     = val === 'engagement' ? "Partner's Details (Bride/Groom-to-be)" : "Groom's Details";
+  } else {
+    secondarySection.style.display = 'none';
+    name2Input.required            = false;
+    phone2Input.required           = false;
+    name2Input.value = phone2Input.value = '';
+    primaryLabel.textContent       = 'Your Details';
+  }
+});
+
+// ── Reference Number ──────────────────────────────────────
+function generateRefNumber() {
+  const chars  = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const year   = new Date().getFullYear();
+  let suffix   = '';
+  for (let i = 0; i < 6; i++) suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+  return `BK-${year}-${suffix}`;
+}
 
 // ── Toast ─────────────────────────────────────────────────
 function showToast(message, type = 'info', duration = 4000) {
@@ -146,17 +265,15 @@ function showToast(message, type = 'info', duration = 4000) {
 
 // ── Validation ────────────────────────────────────────────
 function validateForm() {
-  const hall        = HALL_DATA[selectedHall?.key];
-  const purpose     = purposeSelect.value;
-  const memberRadio = document.querySelector('input[name="memberStatus"]:checked');
+  const hall    = HALL_DATA[selectedHall?.key];
+  const purpose = purposeSelect.value;
 
-  if (!purpose)      { showToast('Please select an event type.', 'error');              return false; }
-  if (purpose === 'other' && !otherInput.value.trim()) { showToast('Please describe your event.', 'error'); return false; }
-  if (!memberRadio)  { showToast('Please indicate your membership status.', 'error');   return false; }
-  if (!document.getElementById('name1').value.trim())  { showToast('Please enter your full name.', 'error'); return false; }
-  if (!document.getElementById('phone1').value.trim()) { showToast('Please enter your phone number.', 'error'); return false; }
-  if (!document.getElementById('church').value.trim()) { showToast('Please enter your church or organisation name.', 'error'); return false; }
-  if (!document.getElementById('eventDate').value)     { showToast('Please select a date for your event.', 'error'); return false; }
+  if (!purpose)                                  { showToast('Please select an event type.', 'error');              return false; }
+  if (purpose === 'other' && !otherInput.value.trim()) { showToast('Please describe your event.', 'error');         return false; }
+  if (!document.getElementById('name1').value.trim())  { showToast('Please enter your full name.', 'error');        return false; }
+  if (!document.getElementById('phone1').value.trim()) { showToast('Please enter your phone number.', 'error');     return false; }
+  if (!document.getElementById('church').value.trim()) { showToast('Please enter your church or organisation.', 'error'); return false; }
+  if (!document.getElementById('eventDate').value)     { showToast('Please select an event date.', 'error');        return false; }
 
   if (purpose === 'engagement' || purpose === 'wedding') {
     if (!document.getElementById('name2').value.trim())  { showToast("Please enter your partner's full name.", 'error');    return false; }
@@ -173,28 +290,29 @@ function validateForm() {
     if (timeToMinutes(end) <= timeToMinutes(start)) { showToast('End time must be after start time.', 'error'); return false; }
   }
 
-  return true;
-}
+  // Validate crew — if a crew is checked, at least one day must be selected
+  const checkedCrew = document.querySelectorAll('.crew-check:checked');
+  for (const cb of checkedCrew) {
+    const i    = cb.dataset.index;
+    const days = document.querySelectorAll(`.crew-day[data-index="${i}"]:checked`).length;
+    if (days === 0) {
+      showToast(`Please select attendance day(s) for: ${cb.dataset.role}`, 'error');
+      return false;
+    }
+  }
 
-// ── Reference Number Generator ────────────────────────────
-function generateRefNumber() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  const year  = new Date().getFullYear();
-  let suffix  = '';
-  for (let i = 0; i < 6; i++) suffix += chars.charAt(Math.floor(Math.random() * chars.length));
-  return `BK-${year}-${suffix}`;
+  return true;
 }
 
 // ── Build Payload ─────────────────────────────────────────
 function buildPayload() {
   const hall    = HALL_DATA[selectedHall.key];
   const purpose = purposeSelect.value;
-  const member  = document.querySelector('input[name="memberStatus"]:checked').value;
 
   let startTime, endTime, durationHours;
   if (hall.fixedSlots) {
     const [s, e] = timeSlotSelect.value.split('-');
-    startTime     = s; endTime = e;
+    startTime = s; endTime = e;
     durationHours = (timeToMinutes(e) - timeToMinutes(s)) / 60;
   } else {
     startTime     = startTimeInput.value;
@@ -202,11 +320,14 @@ function buildPayload() {
     durationHours = (timeToMinutes(endTime) - timeToMinutes(startTime)) / 60;
   }
 
+  const crewSelections = getCrewSelections();
+  const crewTotal      = getCrewTotal();
+  const hallTotal      = durationHours * hall.rate;
+
   return {
     hallKey: selectedHall.key, hallName: hall.name, hallRate: hall.rate,
     purpose, purposeLabel: purposeSelect.options[purposeSelect.selectedIndex].text,
     otherPurpose: purpose === 'other' ? otherInput.value.trim() : '',
-    memberStatus: member,
     name1:  document.getElementById('name1').value.trim(),
     phone1: document.getElementById('phone1').value.trim(),
     name2:  document.getElementById('name2').value.trim(),
@@ -214,7 +335,10 @@ function buildPayload() {
     church: document.getElementById('church').value.trim(),
     eventDate: document.getElementById('eventDate').value,
     startTime, endTime, durationHours,
-    estimatedTotal: durationHours * hall.rate,
+    hallTotal,
+    crewSelections,
+    crewTotal,
+    estimatedTotal: hallTotal + crewTotal,
     notes: document.getElementById('notes').value.trim(),
     referenceNumber: generateRefNumber(),
     status: 'pending',
@@ -229,9 +353,9 @@ document.getElementById('bookingForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   if (!validateForm()) return;
 
-  const submitBtn       = document.getElementById('submitBtn');
-  submitBtn.disabled    = true;
-  submitBtn.innerHTML   = '<span class="spinner"></span> Submitting...';
+  const submitBtn     = document.getElementById('submitBtn');
+  submitBtn.disabled  = true;
+  submitBtn.innerHTML = '<span class="spinner"></span> Submitting...';
 
   try {
     const payload = buildPayload();
@@ -250,3 +374,6 @@ document.getElementById('bookingForm').addEventListener('submit', async (e) => {
     submitBtn.innerHTML = 'Submit Booking Request';
   }
 });
+
+// ── Init ──────────────────────────────────────────────────
+loadHall();

@@ -52,7 +52,7 @@
         <div style="margin-bottom: var(--space-xl);">
           <p class="section-header__eyebrow">Booking Request</p>
           <h2 style="font-size: 1.5rem;">Fill in Your Details</h2>
-          <p style="font-size:0.88rem; margin-top: var(--space-xs);">All fields marked <span style="color:var(--danger);">*</span> are required. We'll contact you once your request is received.</p>
+          <p style="font-size:0.95rem; margin-top: var(--space-xs);">All fields marked <span style="color:var(--danger);">*</span> are required. We'll contact you once your request is received.</p>
         </div>
 
         <form id="bookingForm" novalidate>
@@ -74,30 +74,11 @@
             <input class="form-input" type="text" id="otherPurpose" placeholder="e.g. Annual church dinner, Birthday celebration..." />
           </div>
 
-          <!-- Member Status -->
-          <div class="form-group">
-            <label class="form-label">Are you a BEM On The Rock member? <span class="required">*</span></label>
-            <div class="radio-group">
-              <label class="radio-label">
-                <input type="radio" name="memberStatus" value="member" required />
-                <span class="radio-custom"></span>
-                Yes, I am a registered member
-              </label>
-              <label class="radio-label">
-                <input type="radio" name="memberStatus" value="outsider" />
-                <span class="radio-custom"></span>
-                No, I am not a registered member
-              </label>
-            </div>
-            <p class="form-hint">Member pricing applies to those registered in our church membership system. Admin will verify your status.</p>
-          </div>
-
           <hr class="form-divider" />
 
-          <!-- Primary Contact — always shown -->
+          <!-- Primary Contact -->
           <div id="primarySection">
             <p class="form-section-label" id="primaryLabel">Your Details</p>
-
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label" for="name1">Full Name <span class="required">*</span></label>
@@ -114,7 +95,6 @@
           <div id="secondarySection" style="display:none;">
             <hr class="form-divider" />
             <p class="form-section-label" id="secondaryLabel">Partner's Details</p>
-
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label" for="name2">Full Name <span class="required">*</span></label>
@@ -157,7 +137,7 @@
             </div>
           </div>
 
-          <!-- Start & End time (for non-office halls) -->
+          <!-- Start & End time -->
           <div class="form-row" id="timeRangeGroup">
             <div class="form-group">
               <label class="form-label" for="startTime">Start Time <span class="required">*</span></label>
@@ -169,21 +149,43 @@
             </div>
           </div>
 
-          <!-- Duration & Estimated Cost -->
+          <!-- Cost Preview -->
           <div class="cost-preview" id="costPreview" style="display:none;">
             <div class="cost-preview__row">
               <span>Duration</span>
               <span id="previewDuration">—</span>
             </div>
             <div class="cost-preview__row">
-              <span>Rate</span>
+              <span>Hall Rate</span>
               <span id="previewRate">—</span>
+            </div>
+            <div class="cost-preview__row">
+              <span>Hall Subtotal</span>
+              <span id="previewHallTotal">—</span>
+            </div>
+            <div class="cost-preview__row" id="previewCrewRow" style="display:none;">
+              <span>Crew Subtotal</span>
+              <span id="previewCrewTotal">—</span>
             </div>
             <div class="cost-preview__row cost-preview__row--total">
               <span>Estimated Total</span>
               <span id="previewTotal">—</span>
             </div>
-            <p class="cost-preview__note">Final pricing is subject to admin confirmation and member/outsider verification.</p>
+            <p class="cost-preview__note">Final pricing is subject to admin confirmation.</p>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Crew Selection -->
+          <div id="crewSection">
+            <p class="form-section-label">Crew Requirements</p>
+            <p style="font-size:0.9rem; color:var(--silver); margin-bottom:var(--space-md);">
+              Select the crew you need for your event. Each crew member is charged at <strong style="color:var(--white);">RM 50 per attendance</strong>.
+              If a crew member is needed on both the rehearsal day and the event day, that counts as two attendances (RM 100).
+            </p>
+            <div id="crewList">
+              <!-- Populated by JS based on selected hall -->
+            </div>
           </div>
 
           <hr class="form-divider" />
@@ -211,6 +213,7 @@
   <footer class="footer">
     <div class="container">
       <p>&copy; <span id="year"></span> <strong>BEM On The Rock</strong>. Hall Booking System.</p>
+      <a href="login.html" class="staff-login-link">Staff Login</a>
     </div>
   </footer>
 
