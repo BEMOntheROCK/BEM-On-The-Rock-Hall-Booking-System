@@ -380,6 +380,14 @@ window.generateInvoice = function(id) {
     ${b.crewTotal ? `<div class="inv-row"><span>Crew Subtotal</span><span>RM ${parseFloat(b.crewTotal).toFixed(2)}</span></div>` : ''}
     <div class="inv-total"><span>Estimated Total</span><span>${totalEst}</span></div>
   </div>
+  <div class="inv-section"><h3>Charges</h3>
+    <div class="inv-row"><span>Hall Rental (${b.durationHours} hr × RM ${b.hallRate}/hr)</span><span>${b.hallTotal ? `RM ${parseFloat(b.hallTotal).toFixed(2)}` : `RM ${(b.durationHours * b.hallRate).toFixed(2)}`}</span></div>
+    ${(b.crewSelections && b.crewSelections.length > 0) ? b.crewSelections.map(c =>
+      `<div class="inv-row"><span>Crew — ${c.role} (${c.days.map(d => d === 'rehearsal' ? 'Rehearsal Day' : 'Event Day').join(' + ')})</span><span>RM ${c.cost}.00</span></div>`
+    ).join('') : ''}
+    ${(b.crewSelections && b.crewSelections.length > 0) ? `<div class="inv-row" style="font-weight:600;"><span>Crew Subtotal</span><span>RM ${(b.crewTotal || 0).toFixed(2)}</span></div>` : ''}
+    <div class="inv-total"><span>Estimated Total</span><span>${totalEst}</span></div>
+  </div>
   <div class="inv-section"><h3>Payment</h3>
     <div class="inv-row"><span>Deposit Paid</span><span>${depositPaid}${b.depositMethod?` (${b.depositMethod})`:''}${b.depositReceipt?` — ${b.depositReceipt}`:''}${b.depositDate?` — ${formatDate(b.depositDate)}`:''}</span></div>
     <div class="inv-row"><span>Balance Paid</span><span>${balancePaid}${b.balanceMethod?` (${b.balanceMethod})`:''}${b.balanceReceipt?` — ${b.balanceReceipt}`:''}${b.balanceDate?` — ${formatDate(b.balanceDate)}`:''}</span></div>
