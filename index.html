@@ -19,11 +19,18 @@
           <span>Hall Booking</span>
         </div>
       </div>
-      <a href="login.html" class="btn btn--admin-login">Admin Login</a>
+      <a href="login.html" class="btn--admin-login">Admin Login</a>
+      <button class="navbar__hamburger" id="hamburger" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <div class="navbar__mobile-menu" id="mobileMenu">
+      <a href="index.html">Halls</a>
+      <a href="status.html">Check Booking Status</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="index.html#contact">Contact</a>
     </div>
   </nav>
 
-  <!-- Halls Section — first thing user sees -->
+  <!-- Halls Section -->
   <section class="section section--bg" id="halls">
     <div class="container">
       <div class="section-header">
@@ -32,114 +39,85 @@
         <p class="section-header__subtitle">Select a space below to begin your booking request.</p>
       </div>
 
+      <!-- Search & Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-bar__search">
+          <span class="filter-bar__search-icon">🔍</span>
+          <input
+            class="form-input"
+            type="text"
+            id="hallSearch"
+            placeholder="Search halls..."
+            oninput="applyFilters()"
+          />
+        </div>
+        <div class="filter-bar__filters">
+          <div class="filter-group">
+            <label class="filter-label" for="filterCapacity">Min. Capacity</label>
+            <input
+              class="form-input form-input--sm"
+              type="number"
+              id="filterCapacity"
+              placeholder="e.g. 50"
+              min="1"
+              oninput="applyFilters()"
+            />
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="filterPriceMin">Min. Price (RM/hr)</label>
+            <input
+              class="form-input form-input--sm"
+              type="number"
+              id="filterPriceMin"
+              placeholder="e.g. 50"
+              min="0"
+              oninput="applyFilters()"
+            />
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="filterPriceMax">Max. Price (RM/hr)</label>
+            <input
+              class="form-input form-input--sm"
+              type="number"
+              id="filterPriceMax"
+              placeholder="e.g. 200"
+              min="0"
+              oninput="applyFilters()"
+            />
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="filterFacility">Facility</label>
+            <input
+              class="form-input form-input--sm"
+              type="text"
+              id="filterFacility"
+              placeholder="e.g. PA System"
+              oninput="applyFilters()"
+            />
+          </div>
+          <button class="btn btn--ghost btn--sm" onclick="clearFilters()" id="clearBtn" style="display:none; align-self:flex-end;">
+            Clear
+          </button>
+        </div>
+      </div>
+
       <!-- Hall Grid -->
-      <div class="halls-grid">
-
-        <!-- Awan Hall -->
-        <div class="hall-card">
-          <div class="hall-card__accent" style="background: var(--hall-awan);"></div>
-          <div class="hall-card__body">
-            <span class="hall-card__tag" style="background: var(--hall-awan);">Main Hall</span>
-            <div class="hall-card__name">Awan Hall</div>
-            <div class="hall-card__capacity">Capacity: <strong>up to 500 pax</strong></div>
-            <ul class="hall-card__facilities">
-              <li>3 LED Screens</li>
-              <li>Moving &amp; LED Colourful Lighting</li>
-              <li>Full PA System (max 4 wireless mics)</li>
-              <li>Musical Instruments</li>
-              <li>Rostrum / Podium</li>
-              <li>Kids Room</li>
-              <li>Crew: PA, Media, Live Streaming, Lights &amp; Stage, Security</li>
-            </ul>
-            <div class="hall-card__footer">
-              <div class="hall-card__price">RM 200 <span>/ hour</span></div>
-              <button class="btn btn--primary" onclick="selectHall('awan')">Select Hall</button>
-            </div>
-          </div>
+      <div class="halls-grid" id="hallsGrid">
+        <!-- Populated by JS -->
+        <div class="halls-grid-loading" style="grid-column:1/-1; text-align:center; padding: var(--space-3xl) 0;">
+          <span class="spinner"></span>
         </div>
+      </div>
 
-        <!-- Adiwira Hall -->
-        <div class="hall-card">
-          <div class="hall-card__accent" style="background: var(--hall-adiwira);"></div>
-          <div class="hall-card__body">
-            <span class="hall-card__tag" style="background: var(--hall-adiwira);">Medium Hall</span>
-            <div class="hall-card__name">Adiwira Hall</div>
-            <div class="hall-card__capacity">Capacity: <strong>up to 150 pax</strong></div>
-            <ul class="hall-card__facilities">
-              <li>Full PA System (max 3 wireless mics)</li>
-              <li>LCD Projector &amp; Screen</li>
-              <li>Musical Instruments</li>
-              <li>Rostrum / Podium</li>
-              <li>Crew: PA, Media, Security</li>
-            </ul>
-            <div class="hall-card__footer">
-              <div class="hall-card__price">RM 100 <span>/ hour</span></div>
-              <button class="btn btn--primary" onclick="selectHall('adiwira')">Select Hall</button>
-            </div>
-          </div>
+      <!-- No results -->
+      <div id="noResults" style="display:none;">
+        <div class="empty-state">
+          <div class="empty-state__icon">🔍</div>
+          <div class="empty-state__title">No halls match your search</div>
+          <div class="empty-state__text">Try adjusting your filters or search term.</div>
         </div>
+      </div>
 
-        <!-- Rock Essence -->
-        <div class="hall-card">
-          <div class="hall-card__accent" style="background: var(--hall-rock);"></div>
-          <div class="hall-card__body">
-            <span class="hall-card__tag" style="background: var(--hall-rock);">Dining Hall</span>
-            <div class="hall-card__name">Rock Essence</div>
-            <div class="hall-card__capacity">Capacity: <strong>up to 80 pax</strong></div>
-            <ul class="hall-card__facilities">
-              <li>Chairs &amp; Dining Tables</li>
-              <li>PA System (max 2 mics)</li>
-              <li>Crew: Sound, Multimedia, Security</li>
-            </ul>
-            <div class="hall-card__footer">
-              <div class="hall-card__price">RM 100 <span>/ hour</span></div>
-              <button class="btn btn--primary" onclick="selectHall('rock')">Select Hall</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Office Meeting Room -->
-        <div class="hall-card">
-          <div class="hall-card__accent" style="background: var(--hall-office);"></div>
-          <div class="hall-card__body">
-            <span class="hall-card__tag" style="background: var(--hall-office);">Meeting Room</span>
-            <div class="hall-card__name">Office Meeting Room</div>
-            <div class="hall-card__capacity">Capacity: <strong>up to 20 pax</strong></div>
-            <ul class="hall-card__facilities">
-              <li>Chairs &amp; Tables</li>
-              <li>LCD Projector</li>
-              <li>Max 4 hours per booking</li>
-              <li>Slots: 8:30am–12:30pm · 1:00–5:00pm · 6:00–10:00pm</li>
-              <li>Crew: Security (night only)</li>
-            </ul>
-            <div class="hall-card__footer">
-              <div class="hall-card__price">RM 50 <span>/ hour</span></div>
-              <button class="btn btn--primary" onclick="selectHall('office')">Select Hall</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- VIP Lounge -->
-        <div class="hall-card">
-          <div class="hall-card__accent" style="background: var(--hall-vip);"></div>
-          <div class="hall-card__body">
-            <span class="hall-card__tag" style="background: var(--hall-vip); color: var(--black);">Lounge</span>
-            <div class="hall-card__name">VIP Lounge</div>
-            <div class="hall-card__capacity">Capacity: <strong>up to 12 pax</strong></div>
-            <ul class="hall-card__facilities">
-              <li>Sofa &amp; Chairs</li>
-              <li>Microwave</li>
-              <li>Food Serving Table</li>
-              <li>Crew: Security (night only)</li>
-            </ul>
-            <div class="hall-card__footer">
-              <div class="hall-card__price">RM 50 <span>/ hour</span></div>
-              <button class="btn btn--primary" onclick="selectHall('vip')">Select Hall</button>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /halls-grid -->
     </div>
   </section>
 
@@ -205,7 +183,6 @@
   <!-- Rules & Payment -->
   <section class="section" id="contact">
     <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: start;">
-
       <div>
         <div class="section-header">
           <p class="section-header__eyebrow">Rules &amp; Reminders</p>
@@ -230,7 +207,6 @@
           </li>
         </ul>
       </div>
-
       <div>
         <div class="section-header">
           <p class="section-header__eyebrow">Payment Details</p>
@@ -246,11 +222,10 @@
             <div class="payment-option__label">Option 2</div>
             <div class="payment-option__title">Bank Transfer — Public Bank</div>
             <p>Account No: <code>3187701204</code></p>
-            <p style="margin-top: 4px; font-size:0.8rem; color: var(--silver-dark);">Remark: <em>SEWA HALL &amp; YOUR NAME</em></p>
+            <p style="margin-top: 4px; font-size:0.87rem; color: var(--silver-dark);">Remark: <em>SEWA HALL &amp; YOUR NAME</em></p>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -263,6 +238,6 @@
   </footer>
 
   <div id="toast-container"></div>
-  <script src="index.js"></script>
+  <script type="module" src="index.js"></script>
 </body>
 </html>

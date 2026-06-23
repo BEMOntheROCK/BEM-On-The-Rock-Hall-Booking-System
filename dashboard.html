@@ -16,14 +16,23 @@
         <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
         <div class="navbar__name">
           BEM On The Rock
-          <span style="color: var(--marigold);">Admin Dashboard</span>
+          <span>Hall Booking</span>
         </div>
       </div>
       <div style="display:flex; align-items:center; gap: var(--space-lg);">
+        <a href="halls.html"    class="btn btn--ghost btn--sm">🏛️ Halls</a>
         <a href="calendar.html" class="btn btn--ghost btn--sm">📅 Calendar</a>
         <span style="font-size:0.82rem; color:var(--silver-dark);" id="adminEmail"></span>
         <button class="btn btn--outline btn--sm" id="logoutBtn">Sign Out</button>
       </div>
+      <button class="navbar__hamburger" id="hamburger" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <div class="navbar__mobile-menu" id="mobileMenu">
+      <a href="dashboard.html">Requests</a>
+      <a href="halls.html">Halls</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="analytics.html">Analytics</a>
+    </div>
     </div>
   </nav>
 

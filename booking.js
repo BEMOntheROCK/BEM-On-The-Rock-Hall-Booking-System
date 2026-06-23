@@ -3,50 +3,33 @@
 // ============================================================
 
 import { db } from "./firebase.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { doc, getDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// ── Hall Data ─────────────────────────────────────────────
-const HALL_DATA = {
-  awan: {
-    name: 'Awan Hall', tag: 'Main Hall', capacity: 500, rate: 200, color: '#5BA4D8',
-    supportsRehearsal: true,
-    crew: ['PA System', 'Media — Internal Screen', 'Media — Live Streaming', 'Light & Stage Crew', 'Security & Maintenance'],
-  },
-  adiwira: {
-    name: 'Adiwira Hall', tag: 'Medium Hall', capacity: 150, rate: 100, color: '#9B8FE0',
-    supportsRehearsal: true,
-    crew: ['PA System', 'Media — Internal Screen', 'Security & Maintenance'],
-  },
-  rock: {
-    name: 'Rock Essence', tag: 'Dining Hall', capacity: 80, rate: 100, color: '#E0845A',
-    supportsRehearsal: true,
-    crew: ['Sound Man', 'Multimedia', 'Security & Maintenance'],
-  },
-  office: {
-    name: 'Office Meeting Room', tag: 'Meeting Room', capacity: 20, rate: 50, color: '#5DC490',
-    fixedSlots: true, supportsRehearsal: false,
-    crew: ['Security & Maintenance'],
-  },
-  vip: {
-    name: 'VIP Lounge', tag: 'Lounge', capacity: 12, rate: 50, color: '#ECA820',
-    supportsRehearsal: false,
-    crew: ['Security & Maintenance'],
-  },
-};
-
+// ── Hall Data (loaded from Firestore) ────────────────────
 const CREW_RATE = 50;
 
 // ── Load Hall ─────────────────────────────────────────────
 let selectedHall = null;
 
-function loadHall() {
+async function loadHall() {
   const stored = sessionStorage.getItem('selectedHall');
   if (!stored) { window.location.href = 'index.html'; return; }
   try { selectedHall = JSON.parse(stored); } catch { window.location.href = 'index.html'; return; }
 
-  const hall = HALL_DATA[selectedHall.key];
+  // Fetch fresh hall data from Firestore
+  try {
+    const snap = await getDoc(doc(db, 'halls', selectedHall.id || selectedHall.key));
+    if (!snap.exists()) { window.location.href = 'index.html'; return; }
+    selectedHall = { id: snap.id, key: snap.id, ...snap.data() };
+  } catch (err) {
+    console.error('Failed to load hall:', err);
+    window.location.href = 'index.html'; return;
+  }
+
+  const hall = selectedHall;
   if (!hall) { window.location.href = 'index.html'; return; }
 
   document.getElementById('hallBannerAccent').style.background = hall.color;
@@ -166,7 +149,7 @@ function timeToMinutes(t) {
 
 function updateCostPreview() {
   if (!selectedHall) return;
-  const hall = HALL_DATA[selectedHall.key];
+  const hall = selectedHall;
   let durationMins = 0;
 
   if (hall.fixedSlots) {
@@ -240,15 +223,6 @@ purposeSelect.addEventListener('change', () => {
   }
 });
 
-// ── Reference Number ──────────────────────────────────────
-function generateRefNumber() {
-  const chars  = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  const year   = new Date().getFullYear();
-  let suffix   = '';
-  for (let i = 0; i < 6; i++) suffix += chars.charAt(Math.floor(Math.random() * chars.length));
-  return `BK-${year}-${suffix}`;
-}
-
 // ── Toast ─────────────────────────────────────────────────
 function showToast(message, type = 'info', duration = 4000) {
   const container = document.getElementById('toast-container');
@@ -306,7 +280,7 @@ function validateForm() {
 
 // ── Build Payload ─────────────────────────────────────────
 function buildPayload() {
-  const hall    = HALL_DATA[selectedHall.key];
+  const hall    = selectedHall;
   const purpose = purposeSelect.value;
 
   let startTime, endTime, durationHours;
@@ -340,7 +314,6 @@ function buildPayload() {
     crewTotal,
     estimatedTotal: hallTotal + crewTotal,
     notes: document.getElementById('notes').value.trim(),
-    referenceNumber: generateRefNumber(),
     status: 'pending',
     submittedAt: new Date().toISOString(),
     depositAmount: null, depositMethod: null, depositReceipt: null, depositDate: null,
@@ -348,31 +321,15 @@ function buildPayload() {
   };
 }
 
-// ── Submit ────────────────────────────────────────────────
-document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+// ── Submit — go to review page ───────────────────────────
+document.getElementById('bookingForm').addEventListener('submit', (e) => {
   e.preventDefault();
   if (!validateForm()) return;
 
-  const submitBtn     = document.getElementById('submitBtn');
-  submitBtn.disabled  = true;
-  submitBtn.innerHTML = '<span class="spinner"></span> Submitting...';
-
-  try {
-    const payload = buildPayload();
-    await addDoc(collection(db, 'hall_bookings'), payload);
-
-    sessionStorage.setItem('bookingSubmission', JSON.stringify({
-      hallName: payload.hallName, eventDate: payload.eventDate,
-      name1: payload.name1, purpose: payload.purposeLabel,
-      referenceNumber: payload.referenceNumber,
-    }));
-    window.location.href = 'confirmation.html';
-  } catch (err) {
-    console.error('Submission error:', err);
-    showToast('Something went wrong. Please try again.', 'error');
-    submitBtn.disabled  = false;
-    submitBtn.innerHTML = 'Submit Booking Request';
-  }
+  const payload = buildPayload();
+  // Store payload for review page; reference number generated on final confirm
+  sessionStorage.setItem('pendingBooking', JSON.stringify(payload));
+  window.location.href = 'review.html';
 });
 
 // ── Init ──────────────────────────────────────────────────

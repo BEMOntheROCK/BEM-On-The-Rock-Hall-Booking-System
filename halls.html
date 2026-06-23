@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Halls — BEM On The Rock Admin</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Admin Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span style="color: var(--marigold);">Admin Dashboard</span>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap: var(--space-lg);">
+        <a href="dashboard.html" class="btn btn--ghost btn--sm">📋 Requests</a>
+        <a href="calendar.html"  class="btn btn--ghost btn--sm">📅 Calendar</a>
+        <span style="font-size:0.82rem; color:var(--silver-dark);" id="adminEmail"></span>
+        <button class="btn btn--outline btn--sm" id="logoutBtn">Sign Out</button>
+      </div>
+      <button class="navbar__hamburger" id="hamburger" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <div class="navbar__mobile-menu" id="mobileMenu">
+      <a href="dashboard.html">Requests</a>
+      <a href="halls.html">Halls</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="analytics.html">Analytics</a>
+    </div>
+    </div>
+  </nav>
+
+  <!-- Page -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Header -->
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom: var(--space-xl); flex-wrap:wrap; gap: var(--space-md);">
+        <div>
+          <p class="section-header__eyebrow">Admin</p>
+          <h2 style="margin:0;">Manage Halls</h2>
+        </div>
+        <button class="btn btn--primary" onclick="openHallModal()">+ Add New Hall</button>
+      </div>
+
+      <!-- Hall Cards Grid -->
+      <div class="halls-manage-grid" id="hallsManageGrid">
+        <div class="empty-state">
+          <div class="empty-state__icon">🏛️</div>
+          <div class="empty-state__title">Loading halls...</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== HALL MODAL ===================== -->
+  <div class="modal-overlay" id="hallModal">
+    <div class="modal" style="max-width: 640px;">
+      <div class="modal__header">
+        <span class="modal__title" id="hallModalTitle">Add New Hall</span>
+        <button class="modal__close" onclick="closeHallModal()">✕</button>
+      </div>
+      <div class="modal__body">
+        <form id="hallForm" novalidate>
+
+          <!-- Name -->
+          <div class="form-group">
+            <label class="form-label" for="hallName">Hall Name <span class="required">*</span></label>
+            <input class="form-input" type="text" id="hallName" placeholder="e.g. Awan Hall" required />
+          </div>
+
+          <!-- Capacity & Rate -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="hallCapacity">Capacity (pax) <span class="required">*</span></label>
+              <input class="form-input" type="number" id="hallCapacity" placeholder="e.g. 500" min="1" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hallRate">Rate (RM/hour) <span class="required">*</span></label>
+              <input class="form-input" type="number" id="hallRate" placeholder="e.g. 200" min="1" required />
+            </div>
+          </div>
+
+          <!-- Colour -->
+          <div class="form-group">
+            <label class="form-label" for="hallColor">Identity Colour <span class="required">*</span></label>
+            <div style="display:flex; gap:var(--space-md); align-items:center;">
+              <input class="form-input" type="color" id="hallColor" value="#5BA4D8" style="width:60px; height:42px; padding:2px; cursor:pointer;" />
+              <span style="font-size:0.85rem; color:var(--silver);">This colour appears as the accent on the hall card.</span>
+            </div>
+          </div>
+
+          <!-- Toggles -->
+          <div class="form-row" style="margin-bottom: var(--space-lg);">
+            <label class="toggle-label">
+              <input type="checkbox" id="hallSupportsRehearsal" />
+              <span class="toggle-switch"></span>
+              <span class="toggle-text">Supports Rehearsal Day</span>
+            </label>
+            <label class="toggle-label">
+              <input type="checkbox" id="hallFixedSlots" />
+              <span class="toggle-switch"></span>
+              <span class="toggle-text">Fixed Time Slots</span>
+            </label>
+          </div>
+
+          <!-- Facilities -->
+          <div class="form-group">
+            <label class="form-label">Facilities</label>
+            <p class="form-hint" style="margin-bottom:var(--space-sm);">Add each facility on a new line.</p>
+            <textarea class="form-textarea" id="hallFacilities" rows="5" placeholder="e.g.&#10;3 LED Screens&#10;Full PA System (max 4 wireless mics)&#10;Musical Instruments"></textarea>
+          </div>
+
+          <!-- Crew -->
+          <div class="form-group">
+            <label class="form-label">Crew Roles</label>
+            <p class="form-hint" style="margin-bottom:var(--space-sm);">Add each crew role on a new line.</p>
+            <textarea class="form-textarea" id="hallCrew" rows="4" placeholder="e.g.&#10;PA System&#10;Media — Internal Screen&#10;Security & Maintenance"></textarea>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost btn--sm" onclick="closeHallModal()">Cancel</button>
+        <button class="btn btn--primary btn--sm" id="hallSaveBtn" onclick="saveHall()">Save Hall</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== CONFIRM MODAL ===================== -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal">
+      <div class="modal__header">
+        <span class="modal__title" id="confirmTitle">Confirm Action</span>
+        <button class="modal__close" onclick="closeConfirmModal()">✕</button>
+      </div>
+      <div class="modal__body">
+        <p id="confirmMessage" style="color:var(--silver);"></p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost btn--sm" onclick="closeConfirmModal()">Cancel</button>
+        <button class="btn btn--sm" id="confirmActionBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="halls.js"></script>
+</body>
+</html>
