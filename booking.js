@@ -239,7 +239,7 @@ function showToast(message, type = 'info', duration = 4000) {
 
 // ── Validation ────────────────────────────────────────────
 function validateForm() {
-  const hall    = HALL_DATA[selectedHall?.key];
+  const hall    = selectedHall;
   const purpose = purposeSelect.value;
 
   if (!purpose)                                  { showToast('Please select an event type.', 'error');              return false; }
@@ -299,7 +299,8 @@ function buildPayload() {
   const hallTotal      = durationHours * hall.rate;
 
   return {
-    hallKey: selectedHall.key, hallName: hall.name, hallRate: hall.rate,
+    hallKey: selectedHall.id || selectedHall.key, hallName: hall.name, hallRate: hall.rate,
+    capacity: hall.capacity, color: hall.color,
     purpose, purposeLabel: purposeSelect.options[purposeSelect.selectedIndex].text,
     otherPurpose: purpose === 'other' ? otherInput.value.trim() : '',
     name1:  document.getElementById('name1').value.trim(),
