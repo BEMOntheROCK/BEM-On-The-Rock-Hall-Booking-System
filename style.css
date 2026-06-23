@@ -2577,3 +2577,22 @@ tbody tr:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* --- Status CTA (confirmation page) --- */
+.status-cta {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  background: var(--black-soft);
+  border: 1px solid var(--border-strong);
+  border-left: 3px solid var(--marigold);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  text-align: left;
+}
+
+.status-cta__icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
