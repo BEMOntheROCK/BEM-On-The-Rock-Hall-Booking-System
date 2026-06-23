@@ -2,163 +2,94 @@
 //  BEM ON THE ROCK — Hall Booking | index.js
 // ============================================================
 
-// --- Year ---
+import { db } from "./firebase.js";
+import { collection, onSnapshot, query, orderBy }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// --- Carousel ---
-const SLIDES_PER_VIEW_BREAKPOINTS = [
-  { maxWidth: 768,  slides: 1 },
-  { maxWidth: 1024, slides: 2 },
-  { maxWidth: Infinity, slides: 3 },
-];
+// ── State ─────────────────────────────────────────────────
+let allHalls = [];
 
-let currentIndex = 0;
-
-function getSlidesPerView() {
-  const w = window.innerWidth;
-  for (const bp of SLIDES_PER_VIEW_BREAKPOINTS) {
-    if (w <= bp.maxWidth) return bp.slides;
-  }
-  return 3;
-}
-
-const track      = document.getElementById('carouselTrack');
-const slides     = track ? Array.from(track.querySelectorAll('.carousel__slide')) : [];
-const prevBtn    = document.getElementById('prevBtn');
-const nextBtn    = document.getElementById('nextBtn');
-const dotsContainer = document.getElementById('carouselDots');
-
-function getTotalPages() {
-  return Math.ceil(slides.length / getSlidesPerView());
-}
-
-function buildDots() {
-  if (!dotsContainer) return;
-  dotsContainer.innerHTML = '';
-  const total = getTotalPages();
-  for (let i = 0; i < total; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'carousel__dot' + (i === currentIndex ? ' active' : '');
-    dot.setAttribute('aria-label', `Go to page ${i + 1}`);
-    dot.addEventListener('click', () => goToPage(i));
-    dotsContainer.appendChild(dot);
-  }
-}
-
-function updateCarousel() {
-  if (!track) return;
-  const perView   = getSlidesPerView();
-  const slideWidth = track.parentElement.offsetWidth;
-  const gap        = 24; // matches --space-lg in px
-
-  // Set each slide width
-  slides.forEach(slide => {
-    slide.style.flex = `0 0 calc(${100 / perView}% - ${gap * (perView - 1) / perView}px)`;
-  });
-
-  // Clamp index
-  const totalPages = getTotalPages();
-  if (currentIndex >= totalPages) currentIndex = totalPages - 1;
-  if (currentIndex < 0) currentIndex = 0;
-
-  // Calculate offset
-  const fullSlideWidth = slideWidth / perView;
-  const offset = currentIndex * perView * (fullSlideWidth + gap / perView);
-  track.style.transform = `translateX(-${currentIndex * (slideWidth + gap)}px)`;
-
-  // Simpler: move by container width
-  track.style.transform = `translateX(calc(-${currentIndex * 100}% - ${currentIndex * gap}px))`;
-
-  // Update buttons
-  if (prevBtn) prevBtn.disabled = currentIndex === 0;
-  if (nextBtn) nextBtn.disabled = currentIndex >= totalPages - 1;
-
-  // Update dots
-  const dots = dotsContainer ? dotsContainer.querySelectorAll('.carousel__dot') : [];
-  dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
-}
-
-function goToPage(index) {
-  currentIndex = index;
-  updateCarousel();
-}
-
-function slideCarousel(direction) {
-  const totalPages = getTotalPages();
-  currentIndex = Math.max(0, Math.min(currentIndex + direction, totalPages - 1));
-  updateCarousel();
-}
-
-// Recalculate on resize
-let resizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    buildDots();
-    updateCarousel();
-  }, 150);
+// ── Load Halls from Firestore ─────────────────────────────
+const q = query(collection(db, 'halls'), orderBy('capacity', 'desc'));
+onSnapshot(q, (snapshot) => {
+  allHalls = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  applyFilters();
 });
 
-// Init
-buildDots();
-updateCarousel();
+// ── Render Hall Grid ──────────────────────────────────────
+function renderHalls(halls) {
+  const grid      = document.getElementById('hallsGrid');
+  const noResults = document.getElementById('noResults');
 
-// --- Hall Selection ---
-const HALL_DATA = {
-  awan: {
-    name: 'Awan Hall',
-    capacity: 500,
-    rate: 200,
-    color: '#4A90C4',
-  },
-  adiwira: {
-    name: 'Adiwira Hall',
-    capacity: 150,
-    rate: 100,
-    color: '#7B68C8',
-  },
-  rock: {
-    name: 'Rock Essence',
-    capacity: 80,
-    rate: 100,
-    color: '#C4704A',
-  },
-  office: {
-    name: 'Office Meeting Room',
-    capacity: 20,
-    rate: 50,
-    color: '#4AAB7A',
-  },
-  vip: {
-    name: 'VIP Lounge',
-    capacity: 12,
-    rate: 50,
-    color: '#C4A44A',
-  },
+  if (halls.length === 0) {
+    grid.innerHTML  = '';
+    noResults.style.display = 'block';
+    return;
+  }
+
+  noResults.style.display = 'none';
+  grid.innerHTML = halls.map(h => `
+    <div class="hall-card">
+      <div class="hall-card__accent" style="background:${h.color || '#C0C0C0'};"></div>
+      <div class="hall-card__body">
+        <div class="hall-card__name">${h.name}</div>
+        <div class="hall-card__capacity">Capacity: <strong>up to ${h.capacity} pax</strong></div>
+        <ul class="hall-card__facilities">
+          ${(h.facilities || []).map(f => `<li>${f}</li>`).join('')}
+        </ul>
+        <div class="hall-card__footer">
+          <div class="hall-card__price">RM ${h.rate} <span>/ hour</span></div>
+          <button class="btn btn--primary" onclick="selectHall('${h.id}')">Select Hall</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Select Hall ───────────────────────────────────────────
+window.selectHall = function(hallId) {
+  const hall = allHalls.find(h => h.id === hallId);
+  if (!hall) return;
+  sessionStorage.setItem('selectedHall', JSON.stringify({ key: hall.id, ...hall }));
+  window.location.href = 'booking.html';
 };
 
-function selectHall(hallKey) {
-  const hall = HALL_DATA[hallKey];
-  if (!hall) return;
+// ── Filters ───────────────────────────────────────────────
+window.applyFilters = function() {
+  const search      = document.getElementById('hallSearch').value.trim().toLowerCase();
+  const minCapacity = parseInt(document.getElementById('filterCapacity').value) || 0;
+  const minPrice    = parseInt(document.getElementById('filterPriceMin').value) || 0;
+  const maxPrice    = parseInt(document.getElementById('filterPriceMax').value) || Infinity;
+  const facility    = document.getElementById('filterFacility').value.trim().toLowerCase();
 
-  // Store selected hall in sessionStorage and navigate to booking form
-  sessionStorage.setItem('selectedHall', JSON.stringify({ key: hallKey, ...hall }));
-  window.location.href = 'booking.html';
-}
+  const hasFilter = search || minCapacity || minPrice || (maxPrice < Infinity) || facility;
+  document.getElementById('clearBtn').style.display = hasFilter ? 'inline-flex' : 'none';
 
-// --- Toast Utility (shared, also used in other pages) ---
-function showToast(message, type = 'info', duration = 3500) {
-  const container = document.getElementById('toast-container');
-  if (!container) return;
+  const filtered = allHalls.filter(h => {
+    if (search && !h.name.toLowerCase().includes(search)) return false;
+    if (h.capacity < minCapacity) return false;
+    if (h.rate < minPrice) return false;
+    if (h.rate > maxPrice) return false;
+    if (facility && !(h.facilities || []).some(f => f.toLowerCase().includes(facility))) return false;
+    return true;
+  });
 
-  const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
-  const toast = document.createElement('div');
-  toast.className = `toast toast--${type}`;
-  toast.innerHTML = `<span>${icons[type] || icons.info}</span><span>${message}</span>`;
-  container.appendChild(toast);
+  renderHalls(filtered);
+};
 
-  setTimeout(() => {
-    toast.classList.add('fade-out');
-    toast.addEventListener('animationend', () => toast.remove());
-  }, duration);
-}
+window.clearFilters = function() {
+  document.getElementById('hallSearch').value      = '';
+  document.getElementById('filterCapacity').value  = '';
+  document.getElementById('filterPriceMin').value  = '';
+  document.getElementById('filterPriceMax').value  = '';
+  document.getElementById('filterFacility').value  = '';
+  document.getElementById('clearBtn').style.display = 'none';
+  renderHalls(allHalls);
+};
+
+// ── Hamburger ─────────────────────────────────────────────
+window.toggleMenu = function() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+};

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Review Booking — BEM On The Rock</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span>Hall Booking</span>
+        </div>
+      </div>
+      <a href="login.html" class="btn--admin-login">Admin Login</a>
+      <button class="navbar__hamburger" id="hamburger" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <div class="navbar__mobile-menu" id="mobileMenu">
+      <a href="index.html">Halls</a>
+      <a href="status.html">Check Booking Status</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container" style="max-width: 680px;">
+
+      <a href="booking.html" class="back-link">&#8592; Back to edit</a>
+
+      <div style="margin-bottom: var(--space-xl);">
+        <p class="section-header__eyebrow">Step 2 of 2</p>
+        <h2>Review Your Booking</h2>
+        <p style="font-size:0.95rem; margin-top:var(--space-xs);">Please review all details carefully before submitting your request.</p>
+      </div>
+
+      <!-- Hall Banner -->
+      <div class="hall-banner" id="reviewHallBanner">
+        <div class="hall-banner__accent" id="reviewBannerAccent"></div>
+        <div class="hall-banner__body">
+          <div class="hall-banner__left">
+            <div class="hall-banner__name" id="reviewHallName">—</div>
+            <div class="hall-banner__meta" id="reviewHallMeta">—</div>
+          </div>
+          <div class="hall-banner__price" id="reviewHallPrice">—</div>
+        </div>
+      </div>
+
+      <!-- Review Card -->
+      <div class="card" style="margin-top: var(--space-lg);">
+
+        <!-- Event Details -->
+        <div class="detail-section">
+          <div class="detail-section__title">Event Details</div>
+          <div class="detail-row"><span class="detail-row__label">Event Type</span><span class="detail-row__value" id="reviewPurpose">—</span></div>
+          <div class="detail-row"><span class="detail-row__label">Date</span><span class="detail-row__value" id="reviewDate">—</span></div>
+          <div class="detail-row"><span class="detail-row__label">Time</span><span class="detail-row__value" id="reviewTime">—</span></div>
+          <div class="detail-row"><span class="detail-row__label">Duration</span><span class="detail-row__value" id="reviewDuration">—</span></div>
+        </div>
+
+        <!-- Contact Details -->
+        <div class="detail-section">
+          <div class="detail-section__title">Contact Details</div>
+          <div class="detail-row"><span class="detail-row__label">Name</span><span class="detail-row__value" id="reviewName1">—</span></div>
+          <div class="detail-row"><span class="detail-row__label">Phone</span><span class="detail-row__value" id="reviewPhone1">—</span></div>
+          <div id="reviewPartnerRow" style="display:none;">
+            <div class="detail-row"><span class="detail-row__label">Partner Name</span><span class="detail-row__value" id="reviewName2">—</span></div>
+            <div class="detail-row"><span class="detail-row__label">Partner Phone</span><span class="detail-row__value" id="reviewPhone2">—</span></div>
+          </div>
+          <div class="detail-row"><span class="detail-row__label">Church / Org</span><span class="detail-row__value" id="reviewChurch">—</span></div>
+        </div>
+
+        <!-- Crew -->
+        <div class="detail-section" id="reviewCrewSection" style="display:none;">
+          <div class="detail-section__title">Crew Requirements</div>
+          <div id="reviewCrewList"></div>
+        </div>
+
+        <!-- Notes -->
+        <div class="detail-section" id="reviewNotesSection" style="display:none;">
+          <div class="detail-section__title">Additional Notes</div>
+          <p id="reviewNotes" style="font-size:0.9rem; color:var(--silver);"></p>
+        </div>
+
+        <!-- Cost Summary -->
+        <div class="detail-section">
+          <div class="detail-section__title">Cost Summary</div>
+          <div class="detail-row"><span class="detail-row__label">Hall Rental</span><span class="detail-row__value" id="reviewHallCost">—</span></div>
+          <div class="detail-row" id="reviewCrewCostRow" style="display:none;"><span class="detail-row__label">Crew Total</span><span class="detail-row__value" id="reviewCrewCost">—</span></div>
+          <div class="detail-row" style="border-top:1px solid var(--border-strong); margin-top:var(--space-sm); padding-top:var(--space-sm);">
+            <span class="detail-row__label" style="color:var(--white); font-weight:700;">Estimated Total</span>
+            <span class="detail-row__value" style="color:var(--marigold); font-weight:700; font-size:1.1rem;" id="reviewTotal">—</span>
+          </div>
+          <p style="font-size:0.78rem; color:var(--silver-dark); margin-top:var(--space-sm); font-style:italic;">Final pricing is subject to admin confirmation.</p>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div style="display:flex; gap:var(--space-md); margin-top:var(--space-xl); align-items:center; flex-wrap:wrap;">
+        <button class="btn btn--primary btn--lg" id="confirmBtn" onclick="submitBooking()">
+          Confirm &amp; Submit
+        </button>
+        <a href="booking.html" class="btn btn--ghost">Go Back &amp; Edit</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> <strong>BEM On The Rock</strong>. Hall Booking System.</p>
+      <a href="login.html" class="staff-login-link">Staff Login</a>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+  <script type="module" src="review.js"></script>
+</body>
+</html>

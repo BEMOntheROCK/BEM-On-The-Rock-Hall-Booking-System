@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Status — BEM On The Rock</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span>Hall Booking</span>
+        </div>
+      </div>
+      <a href="login.html" class="btn--admin-login">Admin Login</a>
+      <button class="navbar__hamburger" id="hamburger" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <div class="navbar__mobile-menu" id="mobileMenu">
+      <a href="index.html">Halls</a>
+      <a href="status.html" class="active">Check Booking Status</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container" style="max-width: 560px;">
+
+      <div class="section-header section-header--center">
+        <p class="section-header__eyebrow">Track Your Booking</p>
+        <h2 class="section-header__title">Check Booking Status</h2>
+        <p class="section-header__subtitle">Enter your reference number to check the status of your booking request.</p>
+      </div>
+
+      <!-- Search Form -->
+      <div class="card" style="margin-bottom: var(--space-lg);">
+        <div style="display:flex; gap:var(--space-sm);">
+          <input
+            class="form-input"
+            type="text"
+            id="refInput"
+            placeholder="e.g. BK-2026-A3F9KL"
+            style="font-family: monospace; letter-spacing: 0.05em; flex:1;"
+            onkeydown="if(event.key==='Enter') checkStatus()"
+          />
+          <button class="btn btn--primary" id="checkBtn" onclick="checkStatus()">Check</button>
+        </div>
+        <p class="form-hint" style="margin-top: var(--space-sm);">Your reference number was shown on the confirmation page after submission.</p>
+      </div>
+
+      <!-- Result -->
+      <div id="statusResult" style="display:none;"></div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> <strong>BEM On The Rock</strong>. Hall Booking System.</p>
+      <a href="login.html" class="staff-login-link">Staff Login</a>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+  <script type="module" src="status.js"></script>
+</body>
+</html>

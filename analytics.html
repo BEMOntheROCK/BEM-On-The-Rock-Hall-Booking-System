@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics — BEM On The Rock Admin</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Admin Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span style="color: var(--marigold);">Admin Dashboard</span>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap: var(--space-lg);">
+        <a href="dashboard.html"  class="btn btn--ghost btn--sm">📋 Requests</a>
+        <a href="halls.html"      class="btn btn--ghost btn--sm">🏛️ Halls</a>
+        <a href="calendar.html"   class="btn btn--ghost btn--sm">📅 Calendar</a>
+        <span style="font-size:0.82rem; color:var(--silver-dark);" id="adminEmail"></span>
+        <button class="btn btn--outline btn--sm" id="logoutBtn">Sign Out</button>
+      </div>
+      <button class="navbar__hamburger" id="hamburger" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <div class="navbar__mobile-menu" id="mobileMenu">
+      <a href="dashboard.html">Requests</a>
+      <a href="halls.html">Halls</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="analytics.html" class="active">Analytics</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Header -->
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:var(--space-xl); flex-wrap:wrap; gap:var(--space-md);">
+        <div>
+          <p class="section-header__eyebrow">Admin</p>
+          <h2 style="margin:0;">Analytics</h2>
+        </div>
+        <!-- Year filter -->
+        <div style="display:flex; align-items:center; gap:var(--space-sm);">
+          <label class="filter-label" for="yearFilter">Year</label>
+          <select class="form-select form-select--sm" id="yearFilter" onchange="renderAll()" style="width:100px;"></select>
+        </div>
+      </div>
+
+      <!-- Summary Stats -->
+      <div class="stats-strip" style="grid-template-columns: repeat(4,1fr); margin-bottom:var(--space-2xl);">
+        <div class="stat-card">
+          <div class="stat-card__value" id="statTotalBookings">—</div>
+          <div class="stat-card__label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statApproved">—</div>
+          <div class="stat-card__label">Approved</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statRevenue">—</div>
+          <div class="stat-card__label">Revenue Collected</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statPending">—</div>
+          <div class="stat-card__label">Pending Payment</div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="analytics-grid">
+
+        <!-- Monthly Bookings -->
+        <div class="card analytics-card">
+          <h3 class="analytics-card__title">Bookings per Month</h3>
+          <div class="bar-chart" id="monthlyChart"></div>
+        </div>
+
+        <!-- Hall Popularity -->
+        <div class="card analytics-card">
+          <h3 class="analytics-card__title">Hall Popularity</h3>
+          <div id="hallPopularity"></div>
+        </div>
+
+      </div>
+
+      <!-- Payment Breakdown -->
+      <div class="card" style="margin-top:var(--space-lg);">
+        <h3 class="analytics-card__title" style="margin-bottom:var(--space-lg);">Payment Status Breakdown</h3>
+        <div class="payment-breakdown" id="paymentBreakdown"></div>
+      </div>
+
+      <!-- Revenue by Hall -->
+      <div class="card" style="margin-top:var(--space-lg);">
+        <h3 class="analytics-card__title" style="margin-bottom:var(--space-lg);">Revenue by Hall</h3>
+        <div id="revenueByHall"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="toast-container"></div>
+  <script type="module" src="analytics.js"></script>
+</body>
+</html>
