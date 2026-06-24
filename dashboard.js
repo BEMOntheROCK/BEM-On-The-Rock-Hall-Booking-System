@@ -202,7 +202,6 @@ function renderTable(tab) {
         <td>${b.hallName}</td>
         <td>${formatDate(b.eventDate)}</td>
         <td>${b.purposeLabel}</td>
-        <td>${memberBadge(b.memberStatus)}</td>
         <td style="font-size:0.8rem;">${formatDateTime(b.archivedAt)}</td>
         <td style="font-size:0.8rem; color:var(--danger);">${deleteDate(b.archivedAt)}</td>
       </tr>`;
@@ -212,7 +211,6 @@ function renderTable(tab) {
       <td>${b.hallName}</td>
       <td>${formatDate(b.eventDate)}</td>
       <td>${b.purposeLabel}${b.otherPurpose ? `<br><span style="font-size:0.78rem;color:var(--silver-dark);">${b.otherPurpose}</span>` : ''}</td>
-      <td>${memberBadge(b.memberStatus)}</td>
       <td style="font-size:0.8rem;">${formatDateTime(b.submittedAt)}</td>
       <td>${paymentBadge(b)}</td>
     </tr>`;
@@ -249,7 +247,6 @@ function renderPanel(b) {
     <!-- Status Row -->
     <div style="display:flex; gap:var(--space-sm); flex-wrap:wrap; margin-bottom:var(--space-lg);">
       ${statusBadge(b.status)}
-      ${memberBadge(b.memberStatus)}
       ${paymentBadge(b)}
     </div>
 
@@ -607,3 +604,8 @@ function showToast(message, type = 'info', duration = 3500) {
     toast.addEventListener('animationend', () => toast.remove());
   }, duration);
 }
+
+// ── Hamburger ─────────────────────────────────────────────
+window.toggleMenu = function() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+};

@@ -37,7 +37,7 @@
       <div class="section-header section-header--center">
         <p class="section-header__eyebrow">Track Your Booking</p>
         <h2 class="section-header__title">Check Booking Status</h2>
-        <p class="section-header__subtitle">Enter your reference number to check the status of your booking request.</p>
+        <p class="section-header__subtitle">Enter the name used when submitting your booking to view all your booking requests.</p>
       </div>
 
       <!-- Search Form -->
@@ -46,14 +46,14 @@
           <input
             class="form-input"
             type="text"
-            id="refInput"
-            placeholder="e.g. BK-2026-A3F9KL"
-            style="font-family: monospace; letter-spacing: 0.05em; flex:1;"
+            id="nameInput"
+            placeholder="e.g. Ranny Supang"
+            style="flex:1;"
             onkeydown="if(event.key==='Enter') checkStatus()"
           />
           <button class="btn btn--primary" id="checkBtn" onclick="checkStatus()">Check</button>
         </div>
-        <p class="form-hint" style="margin-top: var(--space-sm);">Your reference number was shown on the confirmation page after submission.</p>
+        <p class="form-hint" style="margin-top: var(--space-sm);">Enter the full name used when submitting your booking request. All bookings under that name will be shown.</p>
       </div>
 
       <!-- Result -->
