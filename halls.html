@@ -126,6 +126,24 @@
             <textarea class="form-textarea" id="hallCrew" rows="4" placeholder="e.g.&#10;PA System&#10;Media — Internal Screen&#10;Security & Maintenance"></textarea>
           </div>
 
+          <!-- Hall Image -->
+          <div class="form-group">
+            <label class="form-label">Hall Image</label>
+            <p class="form-hint" style="margin-bottom:var(--space-sm);">Upload one image for this hall. Max 8MB — will be auto-compressed to ~800KB.</p>
+            <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('hallImageInput').click()">
+              <div id="imagePreviewWrap" style="display:none;">
+                <img id="imagePreview" src="" alt="Hall preview" class="image-preview" />
+                <button type="button" class="image-remove-btn" onclick="removeImage(event)">✕ Remove</button>
+              </div>
+              <div id="imageUploadPlaceholder">
+                <div style="font-size:2rem; margin-bottom:var(--space-sm);">🖼️</div>
+                <p style="font-size:0.88rem; color:var(--silver);">Click to upload an image</p>
+                <p style="font-size:0.78rem; color:var(--silver-dark);">JPG, PNG, WEBP — max 8MB</p>
+              </div>
+            </div>
+            <input type="file" id="hallImageInput" accept="image/*" style="display:none;" onchange="handleImageUpload(event)" />
+          </div>
+
         </form>
       </div>
       <div class="modal__footer">

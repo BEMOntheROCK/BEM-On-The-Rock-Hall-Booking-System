@@ -109,6 +109,92 @@ const DEFAULT_HALLS = [
   },
 ];
 
+
+// ── Image Compression ─────────────────────────────────────
+// Compresses an image File to a target size in KB, returns base64 string
+function compressImage(file, targetKB = 800) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas  = document.createElement('canvas');
+        let { width, height } = img;
+
+        // Scale down if very large
+        const MAX_DIM = 1200;
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) { height = Math.round(height * MAX_DIM / width); width = MAX_DIM; }
+          else                { width  = Math.round(width  * MAX_DIM / height); height = MAX_DIM; }
+        }
+
+        canvas.width  = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+
+        // Binary search for quality that hits target size
+        let lo = 0.1, hi = 0.95, quality = 0.7, result = '';
+        for (let i = 0; i < 10; i++) {
+          quality = (lo + hi) / 2;
+          result  = canvas.toDataURL('image/jpeg', quality);
+          const kb = Math.round((result.length * 3) / 4 / 1024);
+          if (kb > targetKB) hi = quality;
+          else               lo = quality;
+        }
+        resolve(result);
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── Image State ───────────────────────────────────────────
+let pendingImageBase64 = null; // holds compressed base64 during modal session
+
+// ── Image Upload Handler ──────────────────────────────────
+window.handleImageUpload = async function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const maxMB = 8;
+  if (file.size > maxMB * 1024 * 1024) {
+    showToast(`Image must be under ${maxMB}MB.`, 'error'); return;
+  }
+
+  const area = document.getElementById('imageUploadArea');
+  area.classList.add('image-upload-area--loading');
+
+  try {
+    showToast('Compressing image...', 'info', 2000);
+    const compressed = await compressImage(file, 800);
+    pendingImageBase64 = compressed;
+
+    document.getElementById('imagePreview').src        = compressed;
+    document.getElementById('imagePreviewWrap').style.display    = 'block';
+    document.getElementById('imageUploadPlaceholder').style.display = 'none';
+
+    const kb = Math.round((compressed.length * 3) / 4 / 1024);
+    showToast(`Image compressed to ~${kb}KB.`, 'success');
+  } catch (err) {
+    console.error(err);
+    showToast('Failed to process image. Please try another.', 'error');
+  } finally {
+    area.classList.remove('image-upload-area--loading');
+    event.target.value = ''; // reset input so same file can be re-selected
+  }
+};
+
+window.removeImage = function(event) {
+  event.stopPropagation();
+  pendingImageBase64 = null;
+  document.getElementById('imagePreview').src                      = '';
+  document.getElementById('imagePreviewWrap').style.display        = 'none';
+  document.getElementById('imageUploadPlaceholder').style.display  = 'block';
+};
+
 // ── State ─────────────────────────────────────────────────
 let allHalls    = [];
 let editingId   = null;
@@ -152,6 +238,7 @@ function renderHalls() {
 
   grid.innerHTML = allHalls.map(h => `
     <div class="hall-manage-card">
+      ${h.image ? `<div class="hall-manage-card__image"><img src="${h.image}" alt="${h.name}" /></div>` : ''}
       <div class="hall-manage-card__accent" style="background:${h.color};"></div>
       <div class="hall-manage-card__body">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:var(--space-sm);">
@@ -211,9 +298,24 @@ window.openHallModal = function(id = null) {
     document.getElementById('hallFixedSlots').checked       = !!h.fixedSlots;
     document.getElementById('hallFacilities').value        = (h.facilities  || []).join('\n');
     document.getElementById('hallCrew').value              = (h.crew        || []).join('\n');
+
+    // Populate image
+    if (h.image) {
+      pendingImageBase64 = h.image;
+      document.getElementById('imagePreview').src                      = h.image;
+      document.getElementById('imagePreviewWrap').style.display        = 'block';
+      document.getElementById('imageUploadPlaceholder').style.display  = 'none';
+    } else {
+      pendingImageBase64 = null;
+      document.getElementById('imagePreviewWrap').style.display        = 'none';
+      document.getElementById('imageUploadPlaceholder').style.display  = 'block';
+    }
   } else {
     document.getElementById('hallForm').reset();
     document.getElementById('hallColor').value = '#5BA4D8';
+    pendingImageBase64 = null;
+    document.getElementById('imagePreviewWrap').style.display        = 'none';
+    document.getElementById('imageUploadPlaceholder').style.display  = 'block';
   }
 
   document.getElementById('hallModal').classList.add('open');
@@ -245,7 +347,7 @@ window.saveHall = async function() {
   saveBtn.disabled    = true;
   saveBtn.innerHTML   = '<span class="spinner"></span>';
 
-  const data = { name, capacity, rate, color, supportsRehearsal, fixedSlots, facilities, crew };
+  const data = { name, capacity, rate, color, supportsRehearsal, fixedSlots, facilities, crew, image: pendingImageBase64 || null };
 
   try {
     if (editingId) {

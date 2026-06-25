@@ -32,6 +32,7 @@ function renderHalls(halls) {
   noResults.style.display = 'none';
   grid.innerHTML = halls.map(h => `
     <div class="hall-card">
+      ${h.image ? `<div class="hall-card__image"><img src="${h.image}" alt="${h.name}" /></div>` : `<div class="hall-card__image hall-card__image--placeholder" style="background: linear-gradient(135deg, ${h.color || '#C0C0C0'}22, ${h.color || '#C0C0C0'}44);"><span style="font-size:2rem;">🏛️</span></div>`}
       <div class="hall-card__accent" style="background:${h.color || '#C0C0C0'};"></div>
       <div class="hall-card__body">
         <div class="hall-card__name">${h.name}</div>
