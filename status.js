@@ -182,9 +182,10 @@ window.checkStatus = async function() {
           ${b.status !== 'rejected' ? `
           <div class="detail-row"><span class="detail-row__label">Est. Total</span><span class="detail-row__value" style="color:var(--marigold); font-weight:600;">RM ${parseFloat(b.estimatedTotal || 0).toFixed(2)}</span></div>` : ''}
 
-          <!-- Print Invoice -->
-          <div style="margin-top:var(--space-md); padding-top:var(--space-md); border-top:1px solid var(--border);">
+          <!-- Actions -->
+          <div style="margin-top:var(--space-md); padding-top:var(--space-md); border-top:1px solid var(--border); display:flex; gap:var(--space-sm); flex-wrap:wrap;">
             <button class="btn btn--outline btn--sm" onclick='window.printInvoice(${JSON.stringify(b).replace(/'/g, "&#39;")})'>🖨️ Print Booking Summary</button>
+            ${b.status === 'pending' ? `<a href="edit-booking.html?id=${b.id}" class="btn btn--ghost btn--sm">✏️ Edit Booking</a>` : ''}
           </div>
         </div>`;
       }).join('')}`;

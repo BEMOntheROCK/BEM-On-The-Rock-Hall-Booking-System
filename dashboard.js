@@ -524,6 +524,7 @@ window.generateInvoice = function(id) {
       <h1>BEM On The Rock</h1>
       <p>Hall Booking Invoice</p>
       <p style="margin-top:8px; color:#999; font-size:11px;">Generated: ${new Date().toLocaleDateString('en-MY', { day:'numeric', month:'long', year:'numeric' })}</p>
+      ${b.referenceNumber ? `<p style="margin-top:4px; font-family:'Courier New',monospace; font-size:12px; color:#555;">${b.referenceNumber}</p>` : ''}
     </div>
     <span class="inv-badge">${payStatus}</span>
   </div>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Booking — BEM On The Rock</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar__inner">
+      <div class="navbar__brand">
+        <img src="assets/logo.png" alt="BEM On The Rock" class="navbar__logo" onerror="this.style.display='none'" />
+        <div class="navbar__name">
+          BEM On The Rock
+          <span>Hall Booking</span>
+        </div>
+      </div>
+      <a href="status.html" class="btn btn--ghost btn--sm">Check Booking Status</a>
+      <a href="login.html" class="btn--admin-login">Admin Login</a>
+      <button class="navbar__hamburger" id="hamburger" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <div class="navbar__mobile-menu" id="mobileMenu">
+      <a href="index.html">Halls</a>
+      <a href="status.html" class="active">Check Booking Status</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container" style="max-width: 680px;">
+
+      <a href="status.html" class="back-link">&#8592; Back to booking status</a>
+
+      <div style="margin-bottom: var(--space-xl);">
+        <p class="section-header__eyebrow">Edit Booking</p>
+        <h2 id="editPageTitle">Edit Your Booking</h2>
+        <p style="font-size:0.92rem; margin-top:var(--space-xs);">You may only edit bookings that are still pending review. Changes will be saved immediately.</p>
+      </div>
+
+      <!-- Loading state -->
+      <div id="editLoading" style="text-align:center; padding: var(--space-3xl) 0;">
+        <span class="spinner"></span>
+      </div>
+
+      <!-- Edit Form -->
+      <div id="editFormWrap" style="display:none;">
+
+        <!-- Booking Info Banner -->
+        <div class="hall-banner" style="margin-bottom:var(--space-lg);">
+          <div class="hall-banner__accent" id="editBannerAccent"></div>
+          <div class="hall-banner__body">
+            <div class="hall-banner__left">
+              <div class="hall-banner__name" id="editHallName">—</div>
+              <div class="hall-banner__meta">
+                Ref: <span id="editRefNum" style="font-family:monospace; color:var(--marigold);">—</span>
+              </div>
+            </div>
+            <span class="badge badge--pending" style="align-self:center;">Pending Review</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <form id="editForm" novalidate>
+
+            <!-- Event Purpose -->
+            <div class="form-group">
+              <label class="form-label" for="editPurpose">Event Purpose <span class="required">*</span></label>
+              <select class="form-select" id="editPurpose" required>
+                <option value="" disabled>Select event type</option>
+                <option value="engagement">Engagement Ceremony</option>
+                <option value="wedding">Wedding</option>
+                <option value="other">Other (Gathering, Dinner, Activity, etc.)</option>
+              </select>
+            </div>
+
+            <!-- Other purpose -->
+            <div class="form-group" id="editOtherGroup" style="display:none;">
+              <label class="form-label" for="editOtherPurpose">Please describe your event <span class="required">*</span></label>
+              <input class="form-input" type="text" id="editOtherPurpose" />
+            </div>
+
+            <hr class="form-divider" />
+
+            <!-- Schedule -->
+            <p class="form-section-label">Event Schedule</p>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="editDate">Date <span class="required">*</span></label>
+                <input class="form-input" type="date" id="editDate" required />
+              </div>
+              <div class="form-group" id="editSlotGroup" style="display:none;">
+                <label class="form-label" for="editSlot">Time Slot <span class="required">*</span></label>
+                <select class="form-select" id="editSlot">
+                  <option value="" disabled>Select a slot</option>
+                  <option value="08:30-12:30">8:30am – 12:30pm</option>
+                  <option value="13:00-17:00">1:00pm – 5:00pm</option>
+                  <option value="18:00-22:00">6:00pm – 10:00pm</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row" id="editTimeRange">
+              <div class="form-group">
+                <label class="form-label" for="editStart">Start Time <span class="required">*</span></label>
+                <input class="form-input" type="time" id="editStart" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="editEnd">End Time <span class="required">*</span></label>
+                <input class="form-input" type="time" id="editEnd" required />
+              </div>
+            </div>
+
+            <hr class="form-divider" />
+
+            <!-- Crew -->
+            <div id="editCrewSection">
+              <p class="form-section-label">Crew Requirements</p>
+              <p style="font-size:0.9rem; color:var(--silver); margin-bottom:var(--space-md);">Each crew member is charged at <strong style="color:var(--white);">RM 50 per attendance</strong>.</p>
+              <div id="editCrewList"></div>
+            </div>
+
+            <hr class="form-divider" />
+
+            <!-- Notes -->
+            <div class="form-group">
+              <label class="form-label" for="editNotes">Additional Notes <span style="color:var(--silver-dark); font-weight:400;">(optional)</span></label>
+              <textarea class="form-textarea" id="editNotes" placeholder="Any special requirements or additional info..."></textarea>
+            </div>
+
+            <!-- Actions -->
+            <div style="display:flex; gap:var(--space-md); margin-top:var(--space-md); flex-wrap:wrap;">
+              <button type="submit" class="btn btn--primary btn--lg" id="editSaveBtn">Save Changes</button>
+              <a href="status.html" class="btn btn--ghost">Cancel</a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- Error state -->
+      <div id="editError" style="display:none;">
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:var(--space-md);">⚠️</div>
+          <h3 style="margin-bottom:var(--space-sm);" id="editErrorTitle">Booking not found</h3>
+          <p style="font-size:0.9rem;" id="editErrorMsg">This booking could not be loaded.</p>
+          <a href="status.html" class="btn btn--outline" style="margin-top:var(--space-lg); display:inline-block;">Back to Status</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> <strong>BEM On The Rock</strong>. Hall Booking System.</p>
+      <a href="login.html" class="staff-login-link">Staff Login</a>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+  <script type="module" src="edit-booking.js"></script>
+</body>
+</html>
